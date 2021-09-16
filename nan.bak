@@ -1,0 +1,174 @@
+module infnan_mod
+implicit none
+private
+public :: is_nan1, is_nan2, is_nan3, is_finite1, is_finite2, is_inf1, is_inf2, is_posinf, is_neginf
+
+
+contains
+
+function is_nan1(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y, y1, y2
+y1 = (x > 0)
+y2 = (x < 1)
+y1 = .not. y1
+y2 = .not. y2
+y = (y1 .and. y2)   ! Does not work with g95 -ffast-math
+end function is_nan1
+
+function is_nan2(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y, y1, y2
+y1 = (abs(x) + x >= 0)
+y2 = (abs(x) > huge(x))
+y1 = (.not. y1)
+y2 = (.not. y2)
+y = (y1 .and. y2)  ! Does not work with gfortran -O3 -ffast-math or gfortran -Ofast
+end function is_nan2
+
+function is_nan3(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y, y1, y2
+!y1 = (x <= huge(x) .and. x >= -huge(x))
+!y2 = (x > huge(x) .or. x < -huge(x))
+!y2 = (abs(x) > huge(x))
+!y1 = .not. y1
+!y2 = .not. y2
+!y = y1 .and. y2
+y = .not. (x <= huge(x) .and. x >= -huge(x)) .and. .not. ((abs(x) > huge(x)))
+!y = .not. is_finite2(x) .and. .not. is_inf1(x)
+!y = (.not. x <= huge(x) .or. .not. x >= -huge(x)) .and. .not. ((abs(x) > huge(x)))
+!y = (.not. x <= huge(x) .and. .not. x > huge(x)) .or. (.not. x >= -huge(x) .and. .not. x < -huge(x))
+!y = .not. (abs(x) < huge(x)) .and. .not. (abs(x) >= huge(x))
+
+end function is_nan3
+
+elemental pure function is_finite1(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y
+y = (abs(x) <= huge(x))
+end function is_finite1
+
+elemental pure function is_finite2(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y
+y = (x <= huge(x) .and. x >= -huge(x))   ! passes all tests
+end function is_finite2
+
+elemental pure function is_inf1(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y
+y = (abs(x) > huge(x))  ! passes all tests
+end function is_inf1
+
+elemental pure function is_inf2(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y
+y = (x > huge(x) .or. x < -huge(x))
+end function is_inf2
+
+
+elemental pure function is_posinf(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y
+y = (abs(x) > huge(x)) .and. (x > 0)
+end function is_posinf
+
+elemental pure function is_neginf(x) result(y)
+implicit none
+real, intent(in) :: x
+logical :: y
+y = (abs(x) > huge(x)) .and. (x < 0)
+end function is_neginf
+
+end module infnan_mod
+
+program testnan
+use, intrinsic :: ieee_arithmetic, only : ieee_is_nan, ieee_is_finite
+use, non_intrinsic :: infnan_mod, only : is_nan1, is_nan2, is_nan3, is_finite1, is_finite2, is_inf1, is_inf2, is_posinf, is_neginf
+implicit none
+integer :: k, n
+real :: c = huge(0.0)
+real :: x, y
+real :: beg, fin
+logical :: z
+
+n = 10000
+x = c
+x = x**2
+x = x * (1.0 / (x**3))
+y = c
+y = y**2
+
+write (*, *) x, y, -y, 0, 1
+
+write (*, *) 'isnan'
+!write (*, *) ieee_is_nan(x), ieee_is_nan(y), ieee_is_nan(-y), ieee_is_nan(0.0), ieee_is_nan(1.0)
+write (*, *) is_nan1(x), is_nan1(y), is_nan1(-y), is_nan1(0.0)
+write (*, *) is_nan2(x), is_nan2(y), is_nan2(-y), is_nan2(0.0)
+write (*, *) is_nan3(x), is_nan3(y), is_nan3(-y), is_nan3(0.0)
+
+write (*, *) 'isfinite'
+!write (*, *) ieee_is_finite(x), ieee_is_finite(y), ieee_is_finite(-y), ieee_is_finite(0.0), ieee_is_finite(1.0)
+!write (*, *) is_finite1(x), is_finite1(y), is_finite1(-y), is_finite1(0.0), is_finite1(1.0)
+write (*, *) is_finite2(x), is_finite2(y), is_finite2(-y), is_finite2(0.0), is_finite2(1.0)
+
+write (*, *) 'isinf'
+write (*, *) is_inf1(x), is_inf1(y), is_inf1(-y), is_inf1(0.0), is_inf1(1.0)
+!write (*, *) is_inf2(x), is_inf2(y), is_inf2(-y), is_inf2(0.0), is_inf2(1.0)
+write (*, *) is_posinf(x), is_posinf(y), is_posinf(-y), is_posinf(0.0), is_posinf(1.0)
+write (*, *) is_neginf(x), is_neginf(y), is_neginf(-y), is_neginf(0.0), is_neginf(1.0)
+
+call cpu_time(beg)
+do k = 1, n
+    z = ieee_is_nan(x)
+    z = ieee_is_nan(y)
+    z = ieee_is_nan(-y)
+    z = ieee_is_nan(0.0)
+    z = ieee_is_nan(1.0)
+end do
+call cpu_time(fin)
+print *, 'time: ieee', fin - beg
+
+call cpu_time(beg)
+do k = 1, n
+    z = is_nan1(x)
+    z = is_nan1(y)
+    z = is_nan1(-y)
+    z = is_nan1(0.0)
+    z = is_nan1(1.0)
+end do
+call cpu_time(fin)
+print *, 'time: is_nan1', fin - beg
+
+call cpu_time(beg)
+do k = 1, n
+    z = is_nan2(x)
+    z = is_nan2(y)
+    z = is_nan2(-y)
+    z = is_nan2(0.0)
+    z = is_nan2(1.0)
+end do
+call cpu_time(fin)
+print *, 'time: is_nan2', fin - beg
+
+call cpu_time(beg)
+do k = 1, n
+    z = is_nan3(x)
+    z = is_nan3(y)
+    z = is_nan3(-y)
+    z = is_nan3(0.0)
+    z = is_nan3(1.0)
+end do
+call cpu_time(fin)
+print *, 'time: is_nan3', fin - beg
+
+end program testnan
