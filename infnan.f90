@@ -17,8 +17,8 @@ module infnan_mod
 !
 ! 5. N.B.: Do NOT change the implementations without thorough testing. The implementations are
 ! delicate. For example, when compilers are invoked with aggressive optimization flags,
-! (X <= HUGE(X) .AND. X >= -HUGE(X)) differs from (ABS(X) <= HUGE(X))
-! (X > HUGE(X) .OR. X < -HUGE(X)) differs from (ABS(X) > HUGE(X))
+! (X <= HUGE(X) .AND. X >= -HUGE(X)) differs from (ABS(X) <= HUGE(X)) ,
+! (X > HUGE(X) .OR. X < -HUGE(X)) differs from (ABS(X) > HUGE(X)) .
 
 use consts_mod, only : SP, DP
 implicit none
