@@ -1,8 +1,9 @@
 name: Test
 
 on:
-  # Trigger the workflow on push or pull request, but only for the main branch
+  # Trigger the workflow on push or pull request
   push:
+  pull_request:
   # Trigger the workflow at the end of every week
   schedule:
     - cron: '0 0 * * 0'
