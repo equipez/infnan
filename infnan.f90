@@ -54,7 +54,8 @@ elemental pure function is_nan_sp(x) result(y)
 implicit none
 real(SP), intent(in) :: x
 logical :: y
-y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))
+!y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))
+y = (.not. x == x)
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
