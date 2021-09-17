@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         compiler: [gcc]
-        version: [12, 11, 10, 9, 8, 7, 6, 5, 4]
+        version: [11, 10, 9, 8]
 
     steps:
       - name: Checkout repository
