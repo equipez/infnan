@@ -33,4 +33,5 @@ jobs:
           CC: ${{ steps.setup-fortran.outputs.cc }}
 
      - name: Test
-       run: cd test; make gtest
+       run: |
+         cd test; make gtest
