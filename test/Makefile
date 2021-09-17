@@ -1,4 +1,4 @@
-################################################################
+###############################################################
 # This Makefile tests IS_NAN, IS_FINITE, IS_INF, etc using the
 # following compilers with aggressive optimization flags.
 #
@@ -17,10 +17,10 @@
 
 .PHONY: test testd clean
 
-SRC = ../consts.f90 ../infnan.f90 ieee_infnan.f90 infnanfun.f90 testinfnan.f90
+SRC = ../consts.f90 ../infnan.f90 ieee_infnan.f90 testinfnan.f90
 
 test:
-#	make -s 9test
+	make -s 9test
 	make -s atest
 	make -s dtest
 	make -s ftest
@@ -28,7 +28,7 @@ test:
 	make -s itest
 	make -s ntest
 	make -s ptest
-#	make -s stest
+	make -s stest
 	make -s xtest
 
 # Fortran compilers with aggressive optimization flags
@@ -40,7 +40,8 @@ gtest: FCO = gfortran -O3 -ffast-math -Ofast
 itest: FCO = ifort -O3 -fast
 ntest: FCO = nagfor -O4 -ieee=full
 ptest: FCO = pgfortran -O4 -fast
-stest: FCO = sunf95  -O5 -fast -ftrap=%none
+#stest: FCO = sunf95 -O5 -fast -ftrap=%none  # IS_NAN does not work in this case.
+stest: FCO = sunf95 -O5 -ftrap=%none
 xtest: FCO = ifx -O3 -fast
 
 %test: $(SRC)
@@ -62,7 +63,7 @@ testd:
 	make -s itestd
 	make -s ntestd
 	make -s ptestd
-#	make -s stestd
+	make -s stestd
 	make -s xtestd
 
 9testd: FCD = g95 -c -g -Wall -Wextra -fbounds-check -fimplicit-none
@@ -73,7 +74,7 @@ gtestd: FCD = gfortran -c -g -Wall -Wextra -Wampersand -Wconversion -Wconversion
 itestd: FCD = ifort -c -g -warn all -check all  -fpe0 -debug extended -fimplicit-none #-names as_is
 ntestd: FCD = nagfor -c -info -g -gline -u -C -C=all -C=alias -C=dangling -C=intovf -C=undefined -kind=unique -Warn=allocation -Warn=constant_coindexing -Warn=reallocation -Warn=subnormal -colour=error:red,warn:magenta,info:yellow
 ptestd: FCD = pgfortran  -c -g -Minform=warn
-stestd: FCD = sunf95  -c -g -w3 -u -ansi -U
+stestd: FCD = sunf95  -c -g -w3 -u -ansi #-U
 xtestd: FCD = ifx -c -g -warn all -fpe0 -debug extended -fimplicit-none
 
 %testd: $(SRC)
