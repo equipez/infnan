@@ -9,8 +9,16 @@ module infnan_mod
 !
 ! 3. My choice of implementation is totally empirical, in the sense that I have not studied in-depth
 ! what the aggressive optimization flags really do, but only made some tests and found thee
-! implementation that worked correctly. In other words, I do not know why my implementation works
+! implementations that worked correctly. In other words, I do not know why my implementation works
 ! but other implementations may not. The story may change when compilers are changed/updated.
+!
+! 4. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
+! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
+!
+! 5. N.B.: Do NOT change the implementations without thorough testing. The implementations are
+! delicate. For example, when compilers are invoked with aggressive optimization flags,
+! (X <= HUGE(X) .AND. X >= -HUGE(X)) differs from (ABS(X) <= HUGE(X))
+! (X > HUGE(X) .OR. X < -HUGE(X)) differs from (ABS(X) > HUGE(X))
 
 use consts_mod, only : SP, DP
 implicit none
