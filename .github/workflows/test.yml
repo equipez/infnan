@@ -1,6 +1,19 @@
 name: Test
 
-on: [push]
+on:
+  # Trigger the workflow on push or pull request, but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Trigger the workflow at the end of every week
+  schedule:
+    - cron: '0 0 * * 0'
+  # Trigger the workflow when it is manually triggered
+  workflow_dispatch:
+
 
 jobs:
   test:
@@ -56,6 +69,7 @@ jobs:
 
       - name: Setup Fortran
         id: setup_fortran
+        # Use the action defined at github.com/zaikunzhang/setup-fortran to setup Fortran
         uses: zaikunzhang/setup-fortran@main
         with:
           compiler: ${{ matrix.compiler }}
