@@ -56,7 +56,7 @@ jobs:
 
       - name: Setup Fortran
         id: setup_fortran
-        uses: ./
+        uses: zaikunzhang/setup-fortran 
         with:
           compiler: ${{ matrix.compiler }}
           version: ${{ matrix.version }}
