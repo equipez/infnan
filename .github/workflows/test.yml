@@ -55,8 +55,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Fortran
-        id: setup-fortran
-        uses: ./
+        id: setup_fortran
+        uses: ./github/workflows/
         with:
           compiler: ${{ matrix.compiler }}
           version: ${{ matrix.version }}
@@ -67,8 +67,8 @@ jobs:
           ${{ env.CC }} --version
         shell: bash
         env:
-          FC: ${{ steps.setup-fortran.outputs.fc }}
-          CC: ${{ steps.setup-fortran.outputs.cc }}
+          FC: ${{ steps.setup_fortran.outputs.fc }}
+          CC: ${{ steps.setup_fortran.outputs.cc }}
 
       - name: Conduct the test
         run: |
