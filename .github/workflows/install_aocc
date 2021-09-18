@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git clone https://github.com/zaikunzhang/resources
+
+cd resources/
+
+sudo apt install ./aocc*.deb
