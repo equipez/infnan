@@ -21,43 +21,6 @@ jobs:
         compiler: [gcc]
         version: [11, 10, 9, 8]
         bitness: [32, 64]
-        manylinux_image: [manylinux1, manylinux2010, manylinux2014, manylinux_2_24]
-        include:
-          # Run 32- and 64-bit versions in parallel for Linux
-          # MacOS 10.14 Mojave is the last version that supports 32-bit software
-          - os: ubuntu-latest
-            bitness: 64
-            platform_id: manylinux_x86_64
-          - os: ubuntu-latest
-            bitness: 32
-            platform_id: manylinux_i686
-          - os: macos-latest
-            bitness: 64
-            platform_id: macosx_x86_64
-          - os: windows-latest
-            bitness: 32
-            platform_id: win_i686
-          - os: windows-latest
-            bitness: 64
-            platform_id: win_amd64
-        exclude:
-          # manylinux_image is not used on Windows and macOS
-          - os: macos-latest
-            bitness: 32
-          - os: macos-latest
-            manylinux_image: manylinux2010
-          - os: macos-latest
-            manylinux_image: manylinux2014
-          - os: macos-latest
-            manylinux_image: manylinux_2_24
-            #- os: windows-latest
-            #bitness: 32
-          - os: windows-latest
-            manylinux_image: manylinux2010
-          - os: windows-latest
-            manylinux_image: manylinux2014
-          - os: windows-latest
-            manylinux_image: manylinux_2_24
 
     steps:
       - name: Checkout repository
