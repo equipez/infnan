@@ -10,4 +10,4 @@ sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
 sudo apt install intel-basekit intel-hpckit
 . /opt/intel/oneapi/setvars.sh
 IFORT="$(find /opt/*ntel* -type f -executable -name ifort -print -quit)"
-sudo ln -s $IFORT /usr/bin
+sudo ln -s "$IFORT" /usr/bin
