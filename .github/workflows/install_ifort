@@ -9,5 +9,5 @@ echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sourc
 sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
 sudo apt install intel-basekit intel-hpckit
 . /opt/intel/oneapi/setvars.sh
-IFORT="$(locate ifort | grep opt | grep bin | grep compiler | grep -v cfg | head -1)"
+IFORT="$(find /opt/*ntel* -type f -executable -name ifort -print -quit)"
 sudo ln -s $IFORT /usr/bin
