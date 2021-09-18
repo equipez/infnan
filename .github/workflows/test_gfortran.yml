@@ -17,7 +17,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04, ubuntu-18.04, macos-latest, macos-11, macos-10.15, windows-latest, windows-2022, windows-2019, windows-2016]
+        # As of 20210918, according to https://github.com/actions/virtual-environments ,
+        # ubuntu-latest = ubuntu-20.04,
+        # macos-latest = macos-10.15,
+        # windows-latest = windows-2019
+        # The following list should be updated when these latest versions change.
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest, macos-11, windows-latest, windows-2022]
         compiler: [gcc]
         version: [11, 10, 9, 8]
         bitness: [32, 64]
