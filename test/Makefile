@@ -9,7 +9,7 @@
 # gfortran: GNU Fortran (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
 # ifort: ifort (IFORT) 2021.2.0 20210228
 # nagfor: NAG Fortran Compiler Release 7.0(Yurakucho) Build 7036
-# pgfortran: pgfortran (aka nvfortran) 21.3-0 LLVM 64-bit x86-64
+# nvfortran: nvfortran (aka pgfortran) 21.3-0 LLVM 64-bit x86-64
 # sunf95: Oracle Developer Studio 12.6
 # ifx: ifx (IFORT) 2021.2.0 Beta 20210317
 #
@@ -27,8 +27,8 @@ test:
 	make -s gtest
 	make -s itest
 	make -s ntest
-	make -s ptest
 	make -s stest
+	make -s vtest
 	make -s xtest
 
 # Fortran compilers with aggressive optimization flags
@@ -39,7 +39,7 @@ ftest: FCO = flang -O3 -ffast-math -Ofast
 gtest: FCO = gfortran -O3 -ffast-math -Ofast
 itest: FCO = ifort -O3 -fast
 ntest: FCO = nagfor -O4 -ieee=full
-ptest: FCO = pgfortran -O4 -fast
+vtest: FCO = nvfortran -O4 -fast
 #stest: FCO = sunf95 -O5 -fast -ftrap=%none  # IS_NAN does not work in this case.
 stest: FCO = sunf95 -O5 -ftrap=%none
 xtest: FCO = ifx -O3 -fast
@@ -62,8 +62,8 @@ testd:
 	make -s gtestd
 	make -s itestd
 	make -s ntestd
-	make -s ptestd
 	make -s stestd
+	make -s vtestd
 	make -s xtestd
 
 9testd: FCD = g95 -c -g -Wall -Wextra -fbounds-check -fimplicit-none
@@ -73,7 +73,7 @@ ftestd: FCD = flang -c -Wall -Wextra -Mstandard
 gtestd: FCD = gfortran -c -g -Wall -Wextra -Wampersand -Wconversion -Wconversion-extra -Wuninitialized -Wmaybe-uninitialized  -Wsurprising -Waliasing  -Wimplicit-interface -Wimplicit-procedure -Wintrinsics-std -Wunderflow -Wuse-without-only -Wrealloc-lhs -Wrealloc-lhs-all -Wdo-subscript  -Wunused-parameter  -fwhole-file  -fimplicit-none -fbacktrace -ffree-line-length-0 -fcheck=all -ffpe-trap=invalid,zero,overflow,underflow
 itestd: FCD = ifort -c -g -warn all -check all  -fpe0 -debug extended -fimplicit-none #-names as_is
 ntestd: FCD = nagfor -c -info -g -gline -u -C -C=all -C=alias -C=dangling -C=intovf -C=undefined -kind=unique -Warn=allocation -Warn=constant_coindexing -Warn=reallocation -Warn=subnormal -colour=error:red,warn:magenta,info:yellow
-ptestd: FCD = pgfortran  -c -g -Minform=warn
+vtestd: FCD = nvfortran  -c -g -Minform=warn
 stestd: FCD = sunf95  -c -g -w3 -u -ansi #-U
 xtestd: FCD = ifx -c -g -warn all -fpe0 -debug extended -fimplicit-none
 

@@ -1,4 +1,4 @@
-name: Test pgfortran
+name: Test nvfortran
 
 on:
   # Trigger the workflow on push or pull request
@@ -25,10 +25,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install ifort
+      - name: Install nvfotran
         run: |
-          cd .github/workflows; ./install_pgfortran
+          cd .github/workflows; ./install_nvfortran
 
       - name: Conduct the test
         run: |
-          cd test; make ptest
+          cd test; make vtest
