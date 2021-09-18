@@ -8,6 +8,12 @@ rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
 echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
 sudo add-apt-repository "deb https://apt.repos.intel.com/oneapi all main"
 sudo apt install intel-basekit intel-hpckit
-. /opt/intel/oneapi/setvars.sh
+if [[ -f /opt/intel/oneapi/setvars.sh ]] ; then
+    (source /opt/intel/oneapi/setvars.sh > /dev/null ; env | grep intel | sed "s/:\/User.*$//" \
+        | sed 's/^/export /' > "./setintelvars") & disown
+            source "./setintelvars"
+fi
+
+# G95
 IFORT="$(find /opt/*ntel* -type f -executable -name ifort -print -quit)"
 sudo ln -s "$IFORT" /usr/bin
