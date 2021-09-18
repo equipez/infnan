@@ -10,8 +10,8 @@ tar zvxf  flang*.tgz
 
 SETENV="/tmp/setenv_flang.sh"
 cat > "$SETENV" <<EOF
-export PATH=$PATH:$LOCAL/resources/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LOCAL/resources/lib
+export PATH=$PATH:/tmp/resources/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/resources/lib
 EOF
 
 source "$SETENV"
