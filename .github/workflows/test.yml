@@ -80,6 +80,10 @@ jobs:
           FC: ${{ steps.setup_fortran.outputs.fc }}
           CC: ${{ steps.setup_fortran.outputs.cc }}
 
+      - name: Install ifort
+        run: |
+          cd .github/workflows/install_ifort
+
       - name: Conduct the test
         run: |
           cd test; make gtest
