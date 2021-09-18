@@ -34,4 +34,4 @@ jobs:
 
       - name: Conduct the test
         run: |
-          source /tmp/setenv_AOCC.sh; cd test; make dtest
+          source /tmp/setenv.sh; cd test; make dtest

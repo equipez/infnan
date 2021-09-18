@@ -16,8 +16,8 @@ sudo apt install intel-basekit intel-hpckit
 
 if [[ -f /opt/intel/oneapi/setvars.sh ]] ; then
     source /opt/intel/oneapi/setvars.sh > /dev/null ; env | grep intel | sed "s/:\/User.*$//" \
-        | sed 's/^/export /' > "./setintelvars"
-    source "./setintelvars"
+        | sed 's/^/export /' > "/tmp/setenv.sh"
+    source "/tmp/setenv.sh"
 fi
 
 IFORT="$(find /opt/*ntel* -type f -executable -name ifort -print -quit)"

@@ -1,4 +1,4 @@
-name: Test ifort
+name: Test G95
 
 on:
   # Trigger the workflow on push or pull request
@@ -28,10 +28,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install ifort
+      - name: Install Flang
         run: |
-          cd .github/workflows; ./install_ifort
+          cd .github/workflows; ./install_g95
 
       - name: Conduct the test
         run: |
-          source /tmp/setenv.sh; cd test; make itest; make xtest
+          source /tmp/setenv.sh; cd test; make 9test

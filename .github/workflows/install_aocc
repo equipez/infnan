@@ -10,4 +10,4 @@ SETENV="$(find /opt/AMD/ -name *setenv*.sh -print -quit)"
 
 source "$SETENV"
 
-cp "$SETENV" /tmp/setenv_AOCC.sh
+cp "$SETENV" /tmp/setenv.sh
