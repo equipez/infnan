@@ -31,4 +31,4 @@ jobs:
 
       - name: Conduct the test
         run: |
-          source /tmp/setintelvars; cd test; make itest
+          source /tmp/setintelvars; cd test; make itest; make xtest
