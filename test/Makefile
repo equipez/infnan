@@ -34,7 +34,7 @@ test:
 # Fortran compilers with aggressive optimization flags
 9test: FCO = g95 -O3 -ffast-math
 atest: FCO = af95 -no-pie -O4
-dtest: FCO = /opt/AMD/aocc-compiler-3.1.0/bin/flang -O3 -ffast-math -Ofast
+dtest: FCO = /opt/AMD/aocc-compiler-3.1.0/bin/flang -O4 -Ofast -ffast-math
 ftest: FCO = flang -O3 -ffast-math -Ofast
 gtest: FCO = gfortran -O3 -ffast-math -Ofast
 itest: FCO = ifort -O3 -fast
