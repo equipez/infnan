@@ -34,9 +34,9 @@ test:
 # Fortran compilers with aggressive optimization flags
 9test: FCO = g95 -O3 -ffast-math
 atest: FCO = af95 -no-pie -O4
-dtest: FCO = /opt/AMD/aocc-compiler-3.1.0/bin/flang -O4 -Ofast -ffast-math
+dtest: FCO = /opt/AMD/aocc-compiler-3.1.0/bin/flang -O4 -Ofast -ffast-math -flto
 ftest: FCO = flang -O3 -ffast-math -Ofast
-gtest: FCO = gfortran -O3 -ffast-math -Ofast
+gtest: FCO = gfortran -O3 -ffast-math -Ofast -flto
 itest: FCO = ifort -O3 -fast
 ntest: FCO = nagfor -O4 -ieee=full
 vtest: FCO = nvfortran -O4 -fast
@@ -72,7 +72,7 @@ dtestd: FCD = /opt/AMD/aocc-compiler-3.1.0/bin/flang -c -Wall -Wextra -Mstandard
 ftestd: FCD = flang -c -Wall -Wextra -Mstandard
 gtestd: FCD = gfortran -c -g -Wall -Wextra -Wampersand -Wconversion -Wconversion-extra -Wuninitialized -Wmaybe-uninitialized  -Wsurprising -Waliasing  -Wimplicit-interface -Wimplicit-procedure -Wintrinsics-std -Wunderflow -Wuse-without-only -Wrealloc-lhs -Wrealloc-lhs-all -Wdo-subscript  -Wunused-parameter  -fwhole-file  -fimplicit-none -fbacktrace -ffree-line-length-0 -fcheck=all -ffpe-trap=invalid,zero,overflow,underflow
 itestd: FCD = ifort -c -g -warn all -check all  -fpe0 -debug extended -fimplicit-none #-names as_is
-ntestd: FCD = nagfor -c -info -g -gline -u -C -C=all -C=alias -C=dangling -C=intovf -C=undefined -kind=unique -Warn=allocation -Warn=constant_coindexing -Warn=reallocation -Warn=subnormal -colour=error:red,warn:magenta,info:yellow
+ntestd: FCD = nagfor -c -info -g -gline -u -C -C=all -C=alias -C=dangling -C=intovf -C=undefined -kind=unique -Warn=allocation -Warn=constant_coindexing -Warn=subnormal -colour=error:red,warn:magenta,info:yellow
 vtestd: FCD = nvfortran  -c -g -Minform=warn
 stestd: FCD = sunf95  -c -g -w3 -u -ansi #-U
 xtestd: FCD = ifx -c -g -warn all -fpe0 -debug extended -fimplicit-none
