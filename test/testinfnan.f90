@@ -199,7 +199,7 @@ success_DP = all(is_finite(y) .eqv. check_finite) .and. all(is_inf(y) .eqv. chec
     & all(is_nan(y) .eqv. check_nan)
 
 if (.not. success_DP) then
-    write (*, '(1A)') 'Some double-precision tests failed. The data is'
+    write (*, '(1A)') 'Some tests failed. The data is'
     write (*, '(1P, 20D8.0)') y
 else
     write (*, '(1A)') 'All tests succeed.'

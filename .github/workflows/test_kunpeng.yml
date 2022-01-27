@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [g, f, v]
+        compiler: [f, v]
 
     steps:
       - name: Checkout repository
@@ -25,4 +25,10 @@ jobs:
 
       - name: Conduct the test
         run: |
+          LOCAL=$HOME/local
+          BFDIR="$(find "$LOCAL/bisheng" -maxdepth 1 -name "bisheng-compiler-*" -type d -print | sort | tail -n 1)"
+          export PATH="$BFDIR"/bin:$PATH
+          export LD_LIBRARY_PATH="$BFDIR"/lib:$LD_LIBRARY_PATH
+          NVFORTRAN="$(find /opt/nvidia -type f -executable -name nvfortran -print | sort | tail -n 1)"
+          export PATH=$PATH:$(dirname $NVFORTRAN)
           cd test && make ${{ matrix.compiler }}test
