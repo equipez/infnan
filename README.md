@@ -10,8 +10,8 @@ aggressive optimization flags. For example, there are such discussions on
 The `ieee_is_nan` included in `ieee_arithmetic` of `gfortran 9.3.0` does not work with aggressive
 optimization flags like `-Ofast`.
 Given the fact that `-Ofast` implies `-ffinite-math-only`, we cannot blame `ieee_arithmetic` for
-the failure In addition, some compilers
-(`gfortran 9.3.0`, `ifort 21.0`, and `nagfor 7.0`) may not work in the most desirable way concerning 
+the failure. In addition, some compilers
+(`gfortran 9.3.0`, `ifort 21.0`, and `nagfor 7.0`) may not behave in the most desirable way concerning 
 the return kind of `ieee_is_nan` when some special compilation flags are imposed, as has been discussed
 on [Fortran Discourse](https://fortran-lang.discourse.group/t/is-this-expected-fortran-standard-is-not-respected-by-gfortran-fdefault-integer-8-ifort-i8-or-nagfor-i8).
 
