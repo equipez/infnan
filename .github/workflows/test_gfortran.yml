@@ -33,8 +33,8 @@ jobs:
 
       - name: Setup Fortran
         id: setup_fortran
-        # Use the action defined at github.com/zaikunzhang/setup-fortran to setup Fortran
-        uses: zaikunzhang/setup-fortran@main
+        # Use the action defined at github.com/awvwgk/setup-fortran@main to setup Fortran
+        uses: awvwgk/setup-fortran@main
         with:
           compiler: ${{ matrix.compiler }}
           version: ${{ matrix.version }}
