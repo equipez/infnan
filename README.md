@@ -31,5 +31,6 @@ cd test && make clean && make gtest
 
 However, we did observe a failure: `is_nan` does not work with `gfortran -O3 -ffast-math -Ofast -flto`
 on the [Kunpeng Platform](https://e.huawei.com/hk/products/servers/computing-kunpeng) with Ubuntu
-18.04, Linux 4.15.0-166-generic. See the [issue](https://github.com/zaikun/infnan/issues/2) for
+18.04, Linux 4.15.0-166-generic, the `gfortran` version being `GNU Fortran (Ubuntu/Linaro 8.4.0-1ubuntu1~18.04) 8.4.0`.
+See the [issue](https://github.com/zaikun/infnan/issues/2) for
 details. I will be very happy to hear your suggestions on how to fix it.
