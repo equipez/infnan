@@ -33,15 +33,32 @@ test:
 
 # Fortran compilers with aggressive optimization flags
 9test: FCO = g95 -O3 -ffast-math
-atest: FCO = af95 -no-pie -O4
-dtest: FCO = /opt/AMD/aocc-compiler-3.1.0/bin/flang -O4 -Ofast -ffast-math -flto
+
+AFORT :=
+ifneq ("$(wildcard /etc/debian_version)","")
+	AFORT = af95 -no-pie
+else
+	AFORT = af95
+endif
+atest: FCO = $(AFORT) -O4
+
+AFLANG := $(shell find -L /opt/AMD -type f -executable -name flang -print 2> /dev/null | sort | tail -n 1)
+dtest: FCO = $(AFLANG) -O4 -Ofast -ffast-math -flto
+
 ftest: FCO = flang -O3 -ffast-math -Ofast
+
 gtest: FCO = gfortran -O3 -ffast-math -Ofast -flto
+
 itest: FCO = ifort -O3 -fast
+
 ntest: FCO = nagfor -O4 -ieee=full
-vtest: FCO = nvfortran -O4 -fast
+
+VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2> /dev/null | sort | tail -n 1)
+vtest: FCO = $(VFORT) -O4 -fast
+
 #stest: FCO = sunf95 -O5 -fast -ftrap=%none  # IS_NAN does not work in this case.
 stest: FCO = sunf95 -O5 -ftrap=%none
+
 xtest: FCO = ifx -O3 -fast
 
 %test: $(SRC)
@@ -53,7 +70,7 @@ clean:
 	rm -f *.o *.mod *.dbg *test
 
 
-###### The code below is for debugging. #####################
+###### The code below is for debugging and linting the code. #####################
 testd:
 	make -s 9testd
 	make -s atestd
@@ -67,13 +84,13 @@ testd:
 	make -s xtestd
 
 9testd: FCD = g95 -c -g -Wall -Wextra -fbounds-check -fimplicit-none
-atestd: FCD = af95  -c -g -m1 -en
-dtestd: FCD = /opt/AMD/aocc-compiler-3.1.0/bin/flang -c -Wall -Wextra -Mstandard
+atestd: FCD = $(AFORT)  -c -g -m1 -en
+dtestd: FCD = $(AFLANG) -c -Wall -Wextra -Mstandard
 ftestd: FCD = flang -c -Wall -Wextra -Mstandard
 gtestd: FCD = gfortran -c -g -Wall -Wextra -Wampersand -Wconversion -Wconversion-extra -Wuninitialized -Wmaybe-uninitialized  -Wsurprising -Waliasing  -Wimplicit-interface -Wimplicit-procedure -Wintrinsics-std -Wunderflow -Wuse-without-only -Wrealloc-lhs -Wrealloc-lhs-all -Wdo-subscript  -Wunused-parameter  -fwhole-file  -fimplicit-none -fbacktrace -ffree-line-length-0 -fcheck=all -ffpe-trap=invalid,zero,overflow,underflow
 itestd: FCD = ifort -c -g -warn all -check all  -fpe0 -debug extended -fimplicit-none #-names as_is
 ntestd: FCD = nagfor -c -info -g -gline -u -C -C=all -C=alias -C=dangling -C=intovf -C=undefined -kind=unique -Warn=allocation -Warn=constant_coindexing -Warn=subnormal -colour=error:red,warn:magenta,info:yellow
-vtestd: FCD = nvfortran  -c -g -Minform=warn
+vtestd: FCD = $(VFORT)  -c -g -Minform=warn
 stestd: FCD = sunf95  -c -g -w3 -u -ansi #-U
 xtestd: FCD = ifx -c -g -warn all -fpe0 -debug extended -fimplicit-none
 

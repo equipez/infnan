@@ -1,4 +1,4 @@
-name: Test Fortran compilers on Kunpeng
+name: Test NAG Fortran compiler
 
 on:
   # Trigger the workflow on push or pull request
@@ -13,11 +13,7 @@ on:
 jobs:
   test:
     name: Run the tests
-    runs-on: [self-hosted, kunpeng]
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [g, f, v]
+    runs-on: [self-hosted, nagfor]
 
     steps:
       - name: Checkout repository
@@ -25,4 +21,4 @@ jobs:
 
       - name: Conduct the test
         run: |
-          cd test && make ${{ matrix.compiler }}test
+          cd test && make ntest
