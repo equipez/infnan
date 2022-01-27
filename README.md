@@ -1,6 +1,6 @@
 # infnan
 
-`infnan.f90` implements a module providing some functions for checking Inf/NaN, which aim to work
+`infnan.f90` implements a module providing some functions for checking Inf/NaN. They aim to work
 even when compilers are invoked with aggressive optimization flags, including particularly `gfortran -Ofast`.
 
 Many ways exist to implement functions like `is_nan`. However, not all of them work with
@@ -17,7 +17,7 @@ on [Fortran Discourse](https://fortran-lang.discourse.group/t/is-this-expected-f
 
 My choice of implementation is totally empirical, in the sense that I have not studied in-depth what the aggressive optimization flags really do, but only made some tests and found some implementation that worked correctly. In other words, I do not know why my implementation works but other implementations may not. The story may change when compilers are changed/updated.
 
-The good news is, I have tested the functions on 9 compilers with the most aggressive optimization flags that I can figure out, all of which are happy. In particular, the functions work well with `gfortran -Ofast` (`gfortran` version 9.3.0), but those based on `ieee_arithmetic` fail. Such a test can be done by
+The good news is, I have tested the functions on 9 compilers with the most aggressive optimization flags that I can figure out, and all of them suceeded. In particular, the functions work well with `gfortran -Ofast` (`gfortran` version 9.3.0 on Ubuntu 20.04), but those based on `ieee_arithmetic` fail. Such a test can be done by
 ```
 cd test; make gtest
 ```
