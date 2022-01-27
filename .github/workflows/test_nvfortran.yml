@@ -30,8 +30,8 @@ jobs:
 
       - name: Install nvfotran
         run: |
-          cd .github/workflows; ./install_nvfortran
+          cd .github/workflows  && bash ./install_nvfortran
 
       - name: Conduct the test
         run: |
-          cd test; make vtest
+          cd test && make vtest

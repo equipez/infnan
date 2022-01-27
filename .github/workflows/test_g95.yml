@@ -30,7 +30,7 @@ jobs:
 
       - name: Install G95
         run: |
-          cd .github/workflows; ./install_g95
+          cd .github/workflows  && bash ./install_g95
 
       - name: Conduct the test
         run: |

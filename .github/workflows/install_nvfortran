@@ -1,10 +1,32 @@
 #!/bin/bash
 
-wget https://developer.download.nvidia.com/hpc-sdk/21.7/nvhpc-21-7_21.7_amd64.deb \
-  https://developer.download.nvidia.com/hpc-sdk/21.7/nvhpc-2021_21.7_amd64.deb
+# Get the latest version of NVFORTRAN according to the official release notes of NVHPC SDK.
+RELEASE_NOTES_URL="https://docs.nvidia.com/hpc-sdk/hpc-sdk-release-notes/index.html"
+RELEASE_NOTES="$(curl "$RELEASE_NOTES_URL")"
+VERSION="$(echo "$RELEASE_NOTES" | grep "Release\s*Notes\s*Version" | grep -oE "[0-9]+\.[0-9]+")"
+YEAR="$(echo "$VERSION" | sed 's/\..*$//')"
+EDITION="$(echo "$VERSION" | sed 's/^.*\.//')"
 
-sudo apt install ./nvhpc-21-7_21.7_amd64.deb ./nvhpc-2021_21.7_amd64.deb
+# ARCH is the architecture of the current system.
+if [[ "$(uname -m)" == "aarch64" || "$(uname -m)" == "aarch" ]]  ; then
+    ARCH=arm64
+else
+    ARCH=amd64
+fi
 
-NVFORTRAN="$(find /opt/*nvidia* -type f -executable -name nvfortran -print -quit)"
+URL="https://developer.download.nvidia.com/hpc-sdk"
+DEB1=nvhpc-"$YEAR"-"$EDITION"_"$VERSION"_"$ARCH".deb
+DEB2=nvhpc-20"$YEAR"_"$VERSION"_"$ARCH".deb
+
+TMP="/tmp"
+cd "$TMP" || exit 1
+
+wget "$URL/$VERSION/$DEB1" "$URL/$VERSION/$DEB2"
+
+sudo apt install "./$DEB1" "./$DEB2"
+
+rm -f "$DEB1" "$DEB2"
+
+NVFORTRAN="$(find /opt/*nvidia* -type f -executable -name nvfortran -print | tail -1)"
 
 sudo ln -s "$NVFORTRAN" /usr/bin

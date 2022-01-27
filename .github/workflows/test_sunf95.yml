@@ -30,7 +30,7 @@ jobs:
 
       - name: Install Oracle sunf95
         run: |
-          cd .github/workflows; ./install_sunf95
+          cd .github/workflows  && bash ./install_sunf95
 
       - name: Conduct the test
         run: |

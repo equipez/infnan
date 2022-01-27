@@ -1,0 +1,30 @@
+name: Test Fortran compilers on Kunpeng
+
+on:
+  # Trigger the workflow on push or pull request
+  push:
+  # pull_request:  # Disable this on self-hosted runners!!!
+  # Trigger the workflow by cron. The default time zone of GitHub Actions is UTC.
+  schedule:
+    - cron: '0 0 * * 0'
+  # Trigger the workflow when it is manually triggered
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run the tests
+    #needs: check_date
+    #if: ${{ github.event_name != 'schedule' || needs.check_date.outputs.has_recent_commit == 'true' }}
+    runs-on: [self-hosted, kunpeng]
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g, f, v]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Conduct the test
+        run: |
+          cd test && make ${{ matrix.compiler }}test
