@@ -20,7 +20,8 @@ the aggressive optimization flags really do, but only made some tests and found 
 that worked correctly. In other words, I do not know why my implementation works but other
 implementations may not. The story may change when compilers are changed/updated.
 
-The good news is, I have tested the functions on ten compilers with the most aggressive optimization
+The good news is, I have tested the functions on ten compilers on Ubuntu 20.04 (for `gfortran`, `macOS` and `windows` as well) with the most 
+aggressive optimization
 flags that I can figure out, and they all succeeded. In particular, the functions work well with
 `gfortran -Ofast` with `gfortran` 9.3.0 and 10.3.0 on Ubuntu 20.04, but those based on `ieee_arithmetic`
 fail. Such a test can be done by
