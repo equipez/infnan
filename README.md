@@ -21,7 +21,7 @@ that worked correctly. In other words, I do not know why my implementation works
 implementations may not. The story may change when compilers are changed/updated.
 
 The good news is, I have tested the functions using ten compilers on Ubuntu 20.04 with the most 
-aggressive optimization flags that I can figure out, and they all succeeded. In particular, the functions work well with `gfortran -Ofast` with `gfortran` 9.3.0 and 10.3.0, 
+aggressive optimization flags that I can figure out, and they all succeeded. In particular, the functions work well with `gfortran -Ofast` for `gfortran` 9.3.0 and 10.3.0, 
 but those based on `ieee_arithmetic` fail. Such a test can be done by
 
 ```
