@@ -30,7 +30,7 @@ jobs:
 
       - name: Install AOCC
         run: |
-          cd .github/workflows  && bash ./install_aocc
+          cd .github/workflows  && sudo ./install_aocc
 
       - name: Conduct the test
         run: |

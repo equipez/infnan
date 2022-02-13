@@ -30,7 +30,7 @@ jobs:
 
       - name: Install ifort
         run: |
-          cd .github/workflows  && bash ./install_ifort
+          cd .github/workflows  && sudo ./install_ifort
 
       - name: Conduct the test
         run: |

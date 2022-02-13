@@ -30,7 +30,7 @@ jobs:
 
       - name: Install nvfotran
         run: |
-          cd .github/workflows  && bash ./install_nvfortran
+          cd .github/workflows  && sudo ./install_nvfortran
 
       - name: Conduct the test
         run: |
