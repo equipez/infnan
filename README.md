@@ -1,6 +1,6 @@
 # infnan
 
-`infnan.f90` implements a module providing some functions for checking Inf/NaN. They aim to work
+`infnan.f90` implements a module that provides some functions for checking Inf/NaN. They aim to work
 even when compilers are invoked with aggressive optimization flags, including particularly `gfortran -Ofast`.
 
 Many ways exist to implement functions like `is_nan`. However, not all of them work with
