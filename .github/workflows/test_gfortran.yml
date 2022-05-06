@@ -24,7 +24,7 @@ jobs:
         # The following list should be updated when these latest versions change.
         os: [ubuntu-latest, ubuntu-18.04, macos-latest, windows-latest]
         compiler: [gcc]
-        version: [11, 10, 9, 8, 7]
+        version: [12, 11, 10, 9, 8]
         bitness: [32, 64]
         exclude:
             - version: 7
