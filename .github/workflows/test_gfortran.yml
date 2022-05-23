@@ -27,6 +27,8 @@ jobs:
         version: [12, 11, 10, 9, 8]
         bitness: [32, 64]
         exclude:
+            - version: 8
+              os: ubuntu-22.04
             - version: 12
               os: ubuntu-latest
             - version: 12
