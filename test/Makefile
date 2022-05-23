@@ -59,7 +59,8 @@ vtest: FCO = $(VFORT) -O4 -fast
 #stest: FCO = sunf95 -O5 -fast -ftrap=%none  # IS_NAN does not work in this case.
 stest: FCO = sunf95 -O5 -ftrap=%none
 
-xtest: FCO = ifx -O3 -fast
+#xtest: FCO = ifx -O3 -fast # IS_NAN does not work with ifx -fast
+xtest: FCO = ifx -O3
 
 %test: $(SRC)
 	$(FCO) -o $@ $^
