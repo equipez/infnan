@@ -24,11 +24,17 @@ jobs:
         # The following list should be updated when these latest versions change.
         os: [ubuntu-22.04, ubuntu-latest, ubuntu-18.04, macos-latest, windows-latest]
         compiler: [gcc]
-        version: [12, 11, 10, 9, 8, 7]
+        version: [12, 11, 10, 9, 8]
         bitness: [32, 64]
         exclude:
-            - version: 7
+            - version: 12
+              os: ubuntu-latest
+            - version: 12
+              os: macos-latest
+            - version: 12
               os: windows-latest
+            - version: 12
+              os: ubuntu-18.04
 
     steps:
       - name: Checkout repository
