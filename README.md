@@ -28,8 +28,11 @@ but those based on `ieee_arithmetic` fail. Such a test can be done by
 cd test && make clean && make gtest
 ```
 
-However, we did observe a failure: `is_nan` does not work with `gfortran -O3 -ffast-math -Ofast -flto`
+However, we did observe failures.
+
+- `is_nan` does not work with `gfortran -O3 -ffast-math -Ofast -flto`
 on the [Kunpeng Platform](https://e.huawei.com/hk/products/servers/computing-kunpeng) with Ubuntu
 18.04, Linux 4.15.0-166-generic, the `gfortran` version being `GNU Fortran (Ubuntu/Linaro 8.4.0-1ubuntu1~18.04) 8.4.0`.
-See the [issue](https://github.com/zaikun/infnan/issues/2) for
-details. I will be very happy to hear your suggestions on how to fix it.
+- `is_nan` does not work with `ifx -fast`, the version of `ifx` being `ifx (IFORT) 2022.1.0 20220316`.
+
+See the [issues](https://github.com/zaikun/infnan/issues) for details. I will be very happy to hear your suggestions on how to fix it.
