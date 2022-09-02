@@ -35,4 +35,4 @@ on the [Kunpeng Platform](https://e.huawei.com/hk/products/servers/computing-kun
 18.04, Linux 4.15.0-166-generic, the `gfortran` version being `GNU Fortran (Ubuntu/Linaro 8.4.0-1ubuntu1~18.04) 8.4.0`.
 - `is_nan` does not work with `ifx -fast`, the version of `ifx` being `ifx (IFORT) 2022.1.0 20220316`.
 
-See the [issues](https://github.com/zaikun/infnan/issues) for details. I will be very happy to hear your suggestions on how to fix it.
+See the [issues](https://github.com/zaikun/infnan/issues) for details. I will be very happy to hear your suggestions on how to fix .
