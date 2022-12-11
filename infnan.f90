@@ -12,10 +12,10 @@ module infnan_mod
 ! implementations that worked correctly. In other words, I do not know why my implementation works
 ! but other implementations may not. The story may change when compilers are changed/updated.
 !
-! 4. Do NOT change the functions without thorough testing. Their implementation is delicate. For
+! 4. Do NOT change the functions without thorough testing. Their implementations are delicate. For
 ! example, when compilers are invoked with aggressive optimization flags,
 ! (X <= HUGE(X) .AND. X >= -HUGE(X)) may differ from (ABS(X) <= HUGE(X)) ,
-! (X > HUGE(X) .OR. X < -HUGE(X)) may differ from (ABS(X) > HUGE(X)) ,
+! (X > HUGE(X) .OR. X < -HUGE(X)) may differ from (ABS(X) > HUGE(X)) , and
 ! (ABS(X) > HUGE(X) .AND. X > 0) may differ from (X > HUGE(X)) .
 !
 ! 5. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of

@@ -51,7 +51,7 @@ gtest: FCO = gfortran -Ofast  # -Ofast implies -O3 and -ffast-math
 
 itest: FCO = ifort -fast  # -fast implies -Ofast, which in turn implies -O3
 
-ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will encounter "Arithmetic exception: Floating invalid operation" 
+ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will encounter "Arithmetic exception: Floating invalid operation"
 
 VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2> /dev/null | sort | tail -n 1)
 vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimization level is -O4
@@ -59,8 +59,10 @@ vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimizati
 #stest: FCO = sunf95 -O5 -fast -ftrap=%none  # IS_NAN does not work in this case.
 stest: FCO = sunf95 -O5 -ftrap=%none
 
-#xtest: FCO = ifx -fast # IS_NAN does not work with ifx -fast, which implies -Ofast (implies -O3) and -xHost. 
-xtest: FCO = ifx -Ofast -xHost
+# IS_NAN does not work with ifx -Ofast, which is implied by -fast.
+#xtest: FCO = ifx -fast
+#xtest: FCO = ifx -Ofast
+xtest: FCO = ifx -O3 -xHost  # -fast implies -Ofast (which implies -O3) and -xHost
 
 %test: $(SRC)
 	$(FCO) -o $@ $^
