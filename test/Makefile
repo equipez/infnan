@@ -43,24 +43,24 @@ endif
 atest: FCO = $(AFORT) -O4
 
 AFLANG := $(shell find -L /opt/AMD -type f -executable -name flang -print 2> /dev/null | sort | tail -n 1)
-dtest: FCO = $(AFLANG) -O4 -Ofast -ffast-math -flto
+dtest: FCO = $(AFLANG) -O4 -Ofast -ffast-math  # As of AMD clang version 13.0., -Ofast implies -O3, but it is not clear whether it implies -ffast-math
 
-ftest: FCO = flang -O3 -ffast-math -Ofast
+ftest: FCO = flang -O3 -Ofast -ffast-math  # No documentation found about the relation between -Ofast, -O3, and -ffast-math
 
-gtest: FCO = gfortran -O3 -ffast-math -Ofast -flto
+gtest: FCO = gfortran -Ofast  # -Ofast implies -O3 and -ffast-math
 
-itest: FCO = ifort -O3 -fast
+itest: FCO = ifort -fast  # -fast implies -Ofast, which in turn implies -O3
 
-ntest: FCO = nagfor -O4 -ieee=full
+ntest: FCO = nagfor -O4 #-ieee=full 
 
 VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2> /dev/null | sort | tail -n 1)
-vtest: FCO = $(VFORT) -O4 -fast
+vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimization level is -O4
 
 #stest: FCO = sunf95 -O5 -fast -ftrap=%none  # IS_NAN does not work in this case.
 stest: FCO = sunf95 -O5 -ftrap=%none
 
-#xtest: FCO = ifx -O3 -fast # IS_NAN does not work with ifx -fast
-xtest: FCO = ifx -O3
+#xtest: FCO = ifx -fast # IS_NAN does not work with ifx -fast, which implies -Ofast (implies -O3) and -xHost. 
+xtest: FCO = ifx -Ofast -xHost
 
 %test: $(SRC)
 	$(FCO) -o $@ $^
