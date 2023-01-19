@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04]
+        os: [ubuntu-latest]  # As of 20221217, the flang installed by ../scripts/install_flang may only work with ubuntu-22.04
 
     steps:
       - name: Checkout repository

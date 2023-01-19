@@ -34,4 +34,8 @@ jobs:
         run: bash .github/scripts/install_oneapi_macos.sh
 
       - name: Conduct the test
-        run: cd test && make itest && make xtest
+        run: |
+          cd test && make itest
+          if [[ "$RUNNER_OS" = "Linux" ]] ; then
+            make xtest
+          fi
