@@ -1,4 +1,4 @@
-name: Test Oracle sunf95
+name: Test Intel ifort and ifx
 
 on:
   # Trigger the workflow on push or pull request
@@ -17,14 +17,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04]
+        os: [ubuntu-latest, ubuntu-20.04, macos-latest, macos-11]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Oracle sunf95
-        run: bash .github/scripts/install_sunf95
+      - name: Install Intel oneAPI on Linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: bash .github/scripts/install_oneapi_linux.sh
+
+      - name: Install Intel oneAPI on macOS
+        if: startsWith(matrix.os, 'macos')
+        run: bash .github/scripts/install_oneapi_macos.sh
 
       - name: Conduct the test
-        run: cd test && make stest
+        run: cd test && make itest && make xtest

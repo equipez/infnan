@@ -20,9 +20,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Conduct the test
-        run: |
-          LOCAL="$HOME/local"
-          AFDIR="$(find "$LOCAL" -maxdepth 2 -name "absoft[0-9]*" -type d -print | sort | tail -n 1)"
-          source "$AFDIR"/bin/absvars.sh
-          export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
-          cd test && make atest
+        run: cd test && make atest
