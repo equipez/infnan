@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+         submodules: recursive
 
       - name: Setup Fortran
         id: setup_fortran
