@@ -14,34 +14,12 @@ on:
 jobs:
   test:
     runs-on: [self-hosted, pi]
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [gcc]
-        version: [12, 11, 10, 9]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
          submodules: recursive
-
-      - name: Setup Fortran
-        id: setup_fortran
-        # Use the action defined at github.com/awvwgk/setup-fortran@main to setup Fortran
-        uses: awvwgk/setup-fortran@main
-        with:
-          compiler: ${{ matrix.compiler }}
-          version: ${{ matrix.version }}
-
-      - name: Check Fortran compiler
-        run: |
-          ${{ env.FC }} --version
-          ${{ env.CC }} --version
-        shell: bash
-        env:
-          FC: ${{ steps.setup_fortran.outputs.fc }}
-          CC: ${{ steps.setup_fortran.outputs.cc }}
 
       - name: Conduct the test
         run: cd test; make gtest
