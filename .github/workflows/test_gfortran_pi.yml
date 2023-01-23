@@ -1,4 +1,4 @@
-name: Test gfortran
+name: Test gfortran on Raspberry Pi
 
 on:
   # Trigger the workflow on push or pull request
