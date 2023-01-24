@@ -1,6 +1,6 @@
 module inf_mod
-! infnan_mod together with inf_mod and nan_mod provide functions for checking Inf/NaN. They aim 
-! to work even when compilers are invoked with aggressive optimization flags, e.g., `gfortran -Ofast`.
+! infnan_mod together with inf_mod provides functions for checking Inf/NaN. They aim to work even when 
+! compilers are invoked with aggressive optimization flags, e.g., `gfortran -Ofast`.
 ! See infnan.f90 for more comments. 
 
 implicit none
