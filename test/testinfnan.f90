@@ -1,6 +1,4 @@
 module test_infnan_mod
-
-use, non_intrinsic :: consts_mod, only : SP, DP
 implicit none
 private
 public :: test_infnan
@@ -14,6 +12,7 @@ use, intrinsic :: ieee_arithmetic, only : ieee_is_nan, ieee_is_finite, ieee_valu
     & ieee_quiet_nan, ieee_signaling_nan, ieee_positive_inf, ieee_negative_inf, &
     & ieee_positive_normal, ieee_negative_normal, ieee_positive_denormal, ieee_negative_denormal, &
     & ieee_positive_zero, ieee_negative_zero
+use, non_intrinsic :: consts_mod, only : SP, DP
 use, non_intrinsic :: ieee_infnan_mod, only : ieee_is_inf, ieee_is_posinf, ieee_is_neginf
 use, non_intrinsic :: infnan_mod, only : is_nan, is_finite, is_inf, is_posinf, is_neginf
 
@@ -192,6 +191,7 @@ end if
 if (.not. all(is_nan(y) .eqv. check_nan)) then
     write (*, *) 'IS_NAN: ', is_nan(y)
     write (*, *) 'IEEE_IS_NAN: ', ieee_is_nan(y)
+
 end if
 
 success_DP = all(is_finite(y) .eqv. check_finite) .and. all(is_inf(y) .eqv. check_inf) .and. &
