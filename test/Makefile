@@ -45,9 +45,7 @@ atest: FCO = $(AFORT) -O4
 AFLANG := $(shell find -L /opt/AMD -type f -executable -name flang -print 2> /dev/null | sort | tail -n 1)
 dtest: FCO = $(AFLANG) -O4 -Ofast -ffast-math  # As of AMD clang version 13.0., -Ofast implies -O3, but it is not clear whether it implies -ffast-math
 
-# With Flang 15.0.3, IS_NAN does not work with flang -Ofast or flang -ffast-math
 ftest: FCO = flang -O3 -Ofast -ffast-math  # No documentation found about the relation between -Ofast, -O3, and -ffast-math
-#ftest: FCO = flang -O3 #-Ofast -ffast-math  # No documentation found about the relation between -Ofast, -O3, and -ffast-math
 
 gtest: FCO = gfortran -Ofast  # -Ofast implies -O3 and -ffast-math
 
@@ -58,14 +56,9 @@ ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will 
 VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2> /dev/null | sort | tail -n 1)
 vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimization level is -O4
 
-# IS_NAN does not work with sunf95 -fast
 stest: FCO = sunf95 -O5 -fast -ftrap=%none
-#stest: FCO = sunf95 -O5 -ftrap=%none
 
-# IS_NAN does not work with ifx -Ofast, which is implied by -fast.
 xtest: FCO = ifx -fast
-#xtest: FCO = ifx -Ofast
-#xtest: FCO = ifx -O3 -xHost  # -fast implies -Ofast (which implies -O3) and -xHost
 
 %test: $(SRC)
 	$(FCO) -o $@ $^
