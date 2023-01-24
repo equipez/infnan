@@ -1,6 +1,8 @@
 module inf_mod
+! infnan_mod together with inf_mod and nan_mod provide functions for checking Inf/NaN. They aim 
+! to work even when compilers are invoked with aggressive optimization flags, e.g., `gfortran -Ofast`.
+! See infnan.f90 for more comments. 
 
-use consts_mod, only : SP, DP
 implicit none
 private
 public :: is_finite, is_inf, is_posinf, is_neginf
@@ -26,6 +28,7 @@ contains
 
 
 elemental pure function is_finite_sp(x) result(y)
+use consts_mod, only : SP
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -33,6 +36,7 @@ y = (x <= huge(x) .and. x >= -huge(x))
 end function is_finite_sp
 
 elemental pure function is_finite_dp(x) result(y)
+use consts_mod, only : DP
 implicit none
 real(DP), intent(in) :: x
 logical :: y
@@ -41,6 +45,7 @@ end function is_finite_dp
 
 
 elemental pure function is_inf_sp(x) result(y)
+use consts_mod, only : SP
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -48,6 +53,7 @@ y = (abs(x) > huge(x))
 end function is_inf_sp
 
 elemental pure function is_inf_dp(x) result(y)
+use consts_mod, only : DP
 implicit none
 real(DP), intent(in) :: x
 logical :: y
@@ -56,6 +62,7 @@ end function is_inf_dp
 
 
 elemental pure function is_posinf_sp(x) result(y)
+use consts_mod, only : SP
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -63,6 +70,7 @@ y = (abs(x) > huge(x)) .and. (x > 0)
 end function is_posinf_sp
 
 elemental pure function is_posinf_dp(x) result(y)
+use consts_mod, only : DP
 implicit none
 real(DP), intent(in) :: x
 logical :: y
@@ -71,6 +79,7 @@ end function is_posinf_dp
 
 
 elemental pure function is_neginf_sp(x) result(y)
+use consts_mod, only : SP
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -78,6 +87,7 @@ y = (abs(x) > huge(x)) .and. (x < 0)
 end function is_neginf_sp
 
 elemental pure function is_neginf_dp(x) result(y)
+use consts_mod, only : DP
 implicit none
 real(DP), intent(in) :: x
 logical :: y

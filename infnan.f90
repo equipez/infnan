@@ -1,6 +1,6 @@
 module infnan_mod
-! 1. This module provides functions for checking Inf/NaN. They aim to work even when compilers are
-! invoked with aggressive optimization flags, such as `gfortran -Ofast`.
+! 1. infnan_mod together with inf_mod and nan_mod provide functions for checking Inf/NaN. They aim 
+! to work even when compilers are invoked with aggressive optimization flags, e.g., `gfortran -Ofast`.
 !
 ! 2. There are many ways to implement functions like `is_nan`. However, not all of them work with
 ! aggressive optimization flags. For example, for `gfortran 9.3.0`, the `ieee_is_nan` included in
@@ -17,15 +17,18 @@ module infnan_mod
 ! (X <= HUGE(X) .AND. X >= -HUGE(X)) may differ from (ABS(X) <= HUGE(X)) ,
 ! (X > HUGE(X) .OR. X < -HUGE(X)) may differ from (ABS(X) > HUGE(X)) , and
 ! (ABS(X) > HUGE(X) .AND. X > 0) may differ from (X > HUGE(X)) .
+! 
+! 5. is_nan must be implemented in a file separated from is_inf and is_finite. Otherwise, is_nan may  
+! not work with some compilers invoked with agressive optimization flags e.g., ifx -fast with 
+! ifx 2022.1.0 or flang -Ofast with flang 15.0.3. 
 !
-! 5. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
+! 6. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
 ! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
-
 
 use inf_mod, only : is_finite, is_inf, is_posinf, is_neginf
 use nan_mod, only : is_nan
 implicit none
 private
-public :: is_nan, is_finite, is_inf, is_posinf, is_neginf
+public :: is_finite, is_inf, is_posinf, is_neginf, is_nan
 
 end module infnan_mod
