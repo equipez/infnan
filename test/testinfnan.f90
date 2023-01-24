@@ -191,7 +191,6 @@ end if
 if (.not. all(is_nan(y) .eqv. check_nan)) then
     write (*, *) 'IS_NAN: ', is_nan(y)
     write (*, *) 'IEEE_IS_NAN: ', ieee_is_nan(y)
-
 end if
 
 success_DP = all(is_finite(y) .eqv. check_finite) .and. all(is_inf(y) .eqv. check_inf) .and. &
