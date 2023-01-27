@@ -1,4 +1,4 @@
-name: Test Fortran compilers on Kunpeng
+name: Test compilers on Kunpeng
 
 on:
   # Trigger the workflow on push or pull request
@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [f, v]
+        compiler: [g, f, v]
 
     steps:
       - name: Checkout repository
