@@ -2,18 +2,17 @@
 # This Makefile tests IS_NAN, IS_FINITE, IS_INF, etc using the
 # following compilers with aggressive optimization flags.
 #
-# g95: G95 (GCC 4.0.3 (g95 0.94!) Jan 17 2013)
-# af95: Absoft 64-bit Pro Fortran 21.0.0
-# AMD AOCC flang: Flang in AMD clang version 12.0.0
-# flang: Flang in clang version 7.1.0
-# gfortran: GNU Fortran (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
-# ifort: ifort (IFORT) 2021.2.0 20210228
-# nagfor: NAG Fortran Compiler Release 7.0(Yurakucho) Build 7036
-# nvfortran: nvfortran (aka pgfortran) 21.3-0 LLVM 64-bit x86-64
-# sunf95: Oracle Developer Studio 12.6
-# ifx: ifx (IFORT) 2021.2.0 Beta 20210317
-#
-# Tested on Ubuntu 20.04 with Linux 5.4.0-77-generic x86_64
+# g95
+# af95 (Absoft 64-bit Pro Fortran)
+# AMD AOCC flang
+# Huawei Bisheng flang
+# Classic flang
+# gfortran
+# ifort
+# ifx
+# nagfor
+# nvfortran (aka pgfortran)
+# sunf95
 
 .PHONY: test testd clean
 
