@@ -1,4 +1,4 @@
-name: Test compilers on Raspberry Pi
+name: Test compilers on Raspberry Pi32
 
 on:
   # Trigger the workflow on push or pull request

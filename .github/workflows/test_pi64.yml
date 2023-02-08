@@ -1,4 +1,4 @@
-name: Test compilers on Raspberry Pi
+name: Test compilers on Raspberry Pi64
 
 on:
   # Trigger the workflow on push or pull request
@@ -22,4 +22,4 @@ jobs:
          submodules: recursive
 
       - name: Conduct the test
-        run: cd test; make gtest
+        run: cd test; make gtest; make clean; make vtest
