@@ -26,6 +26,7 @@ test:
 	make -s gtest
 	make -s itest
 	make -s ntest
+	make -s rtest
 	make -s stest
 	make -s vtest
 	make -s xtest
@@ -55,6 +56,9 @@ ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will 
 VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2> /dev/null | sort | tail -n 1)
 vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimization level is -O4
 
+RFORT := $(shell find -L /opt/arm -type f -executable -name armflang -print 2> /dev/null | sort | tail -n 1)
+rtest: FCO = RFORT -Ofast # -Ofast implies -O3 and -ffast-math
+
 stest: FCO = sunf95 -O5 -fast -ftrap=%none
 
 xtest: FCO = ifx -fast
@@ -77,6 +81,7 @@ testd:
 	make -s gtestd
 	make -s itestd
 	make -s ntestd
+	make -s rtestd
 	make -s stestd
 	make -s vtestd
 	make -s xtestd
@@ -89,6 +94,7 @@ gtestd: FCD = gfortran -c -g -Wall -Wextra -Wampersand -Wconversion -Wconversion
 itestd: FCD = ifort -c -g -warn all -check all  -fpe0 -debug extended -fimplicit-none #-names as_is
 ntestd: FCD = nagfor -c -info -g -gline -u -C -C=all -C=alias -C=dangling -C=intovf -C=undefined -kind=unique -Warn=allocation -Warn=constant_coindexing -Warn=subnormal -colour=error:red,warn:magenta,info:yellow
 vtestd: FCD = $(VFORT)  -c -g -Minform=warn
+rtestd: FCD = $(RFORT) -c -Wall -Wextra -Mstandard
 stestd: FCD = sunf95  -c -g -w3 -u -ansi #-U
 xtestd: FCD = ifx -c -g -warn all -fpe0 -debug extended -fimplicit-none
 
