@@ -57,7 +57,7 @@ VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 
 vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimization level is -O4
 
 RFORT := $(shell find -L /opt/arm -type f -executable -name armflang -print 2> /dev/null | sort | tail -n 1)
-rtest: FCO = RFORT -Ofast # -Ofast implies -O3 and -ffast-math
+rtest: FCO = $(RFORT) -Ofast # -Ofast implies -O3 and -ffast-math
 
 stest: FCO = sunf95 -O5 -fast -ftrap=%none
 
