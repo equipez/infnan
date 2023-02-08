@@ -1,0 +1,25 @@
+name: Test compilers on Raspberry Pi
+
+on:
+  # Trigger the workflow on push or pull request
+  push:
+  pull_request:
+  # Trigger the workflow at the end of every week
+  schedule:
+    - cron: '0 0 * * 0'
+  # Trigger the workflow when it is manually triggered
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    runs-on: [self-hosted, pi, ARM]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+         submodules: recursive
+
+      - name: Conduct the test
+        run: cd test; make gtest
