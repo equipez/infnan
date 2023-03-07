@@ -22,4 +22,4 @@ jobs:
          submodules: recursive
 
       - name: Conduct the test
-        run: cd test && make gtest && make clean && make rtest && make clean && make vtest
+        run: cd test && make gtest && make clean && make ftest && make clean && make rtest && make clean && make vtest
