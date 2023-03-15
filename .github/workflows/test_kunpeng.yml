@@ -27,7 +27,7 @@ jobs:
           if [[ -n "$ARMDIR" ]] ; then
             export PATH=$PATH:"$ARMDIR"/bin
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-  -         ARMLD="$(find /opt/arm -type f -executable -name ld | xargs dirname)"
+            ARMLD="$(find /opt/arm -type f -executable -name ld | xargs dirname)"
             ARMLD_DIR=${ARMLD//$'\n'/:}
             export PATH=$PATH:"$ARMLD_DIR"
           fi
