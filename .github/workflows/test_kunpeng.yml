@@ -22,7 +22,7 @@ jobs:
          submodules: recursive
 
       - name: Conduct the test
-        run:|
+        run: |
           ARMDIR="$(find /opt/arm -maxdepth 1 -name "arm-linux-compiler*" -type d -print | sort | tail -n 1)"
           if [[ -n "$ARMDIR" ]] ; then
             export PATH=$PATH:"$ARMDIR"/bin
