@@ -27,8 +27,8 @@ jobs:
           if [[ -n "$ARMDIR" ]] ; then
             export PATH=$PATH:"$ARMDIR"/bin
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-  -         ARMLD_DIR=$(find /opt/arm -name ld | xargs dirname)
-            ARMLD_DIR=${ARMLD_DIR//$'\n'/:}
+  -         ARMLD="$(find /opt/arm -type f -executable -name ld | xargs dirname)"
+            ARMLD_DIR=${ARMLD//$'\n'/:}
             export PATH=$PATH:"$ARMLD_DIR"
           fi
           cd test && make gtest && make clean && make ftest && make clean && make rtest
