@@ -1,23 +1,19 @@
-name: Test compilers on Kunpeng
+name: Test compilers on Raspberry Pi64
 
 on:
   # Trigger the workflow on push or pull request
   push:
-  # pull_request:  # Disable this on self-hosted runners!!!
-  # Trigger the workflow by cron. The default time zone of GitHub Actions is UTC.
+  pull_request:
+  # Trigger the workflow at the end of every week
   schedule:
     - cron: '0 0 * * 0'
   # Trigger the workflow when it is manually triggered
   workflow_dispatch:
 
+
 jobs:
   test:
-    name: Run the tests
-    runs-on: [self-hosted, kunpeng]
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler: [g, f, v]
+    runs-on: [self-hosted, kp, ARM64]
 
     steps:
       - name: Checkout repository
@@ -26,11 +22,13 @@ jobs:
          submodules: recursive
 
       - name: Conduct the test
-        run: |
-          LOCAL=$HOME/local
-          BFDIR="$(find "$LOCAL/bisheng" -maxdepth 1 -name "bisheng-compiler-*" -type d -print | sort | tail -n 1)"
-          export PATH="$BFDIR"/bin:$PATH
-          export LD_LIBRARY_PATH="$BFDIR"/lib:$LD_LIBRARY_PATH
-          NVFORTRAN="$(find /opt/nvidia -type f -executable -name nvfortran -print | sort | tail -n 1)"
-          export PATH=$PATH:$(dirname $NVFORTRAN)
-          cd test && make ${{ matrix.compiler }}test
+        run:|
+        ARMDIR="$(find /opt/arm -maxdepth 1 -name "arm-linux-compiler*" -type d -print | sort | tail -n 1)"
+        if [[ -n "$ARMDIR" ]] ; then
+          export PATH=$PATH:"$ARMDIR"/bin
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+-         ARMLD_DIR=$(find /opt/arm -name ld | xargs dirname)
+          ARMLD_DIR=${ARMLD_DIR//$'\n'/:}
+          export PATH=$PATH:"$ARMLD_DIR"
+        fi
+        cd test && make gtest && make clean && make ftest && make clean && make rtest
