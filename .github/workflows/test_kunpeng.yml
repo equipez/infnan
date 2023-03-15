@@ -20,8 +20,7 @@ jobs:
         uses: actions/checkout@v3.3.0
         with:
          ssh-key: |
-           ${{ secrets.SSH_PRIVATE_KEY_KP1 }}
-           ${{ secrets.SSH_PRIVATE_KEY_KP2 }}
+           ${{ secrets.SSH_PRIVATE_KEY_KP }}
          submodules: recursive
 
       - name: Conduct the test
