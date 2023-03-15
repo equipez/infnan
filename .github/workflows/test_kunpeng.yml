@@ -33,5 +33,5 @@ jobs:
             ARMLD_DIR=${ARMLD//$'\n'/:}
             export PATH=$PATH:"$ARMLD_DIR"
           fi
-          #cd test && make gtest && make clean && make ftest && make clean && make rtest
-          cd test && make clean && make ftest && make clean && make rtest
+          #cd test && make gtest && make clean && make ftest && make clean && make rtest  # gfortran 7 does not support ieee_arithmetic
+          cd test && make clean && make ftest && make clean && make rtest && make clean && make vtest
