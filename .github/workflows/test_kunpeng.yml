@@ -1,9 +1,9 @@
-name: Test compilers on Raspberry Pi64
+name: Test compilers on Kunpeng
 
 on:
   # Trigger the workflow on push or pull request
   push:
-  pull_request:
+  # pull_request:  # Disable this on self-hosted runners!!!
   # Trigger the workflow at the end of every week
   schedule:
     - cron: '0 0 * * 0'
@@ -23,12 +23,12 @@ jobs:
 
       - name: Conduct the test
         run:|
-        ARMDIR="$(find /opt/arm -maxdepth 1 -name "arm-linux-compiler*" -type d -print | sort | tail -n 1)"
-        if [[ -n "$ARMDIR" ]] ; then
-          export PATH=$PATH:"$ARMDIR"/bin
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
--         ARMLD_DIR=$(find /opt/arm -name ld | xargs dirname)
-          ARMLD_DIR=${ARMLD_DIR//$'\n'/:}
-          export PATH=$PATH:"$ARMLD_DIR"
-        fi
-        cd test && make gtest && make clean && make ftest && make clean && make rtest
+          ARMDIR="$(find /opt/arm -maxdepth 1 -name "arm-linux-compiler*" -type d -print | sort | tail -n 1)"
+          if [[ -n "$ARMDIR" ]] ; then
+            export PATH=$PATH:"$ARMDIR"/bin
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+  -         ARMLD_DIR=$(find /opt/arm -name ld | xargs dirname)
+            ARMLD_DIR=${ARMLD_DIR//$'\n'/:}
+            export PATH=$PATH:"$ARMLD_DIR"
+          fi
+          cd test && make gtest && make clean && make ftest && make clean && make rtest

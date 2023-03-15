@@ -3,7 +3,7 @@ name: Test compilers on Raspberry Pi32
 on:
   # Trigger the workflow on push or pull request
   push:
-  pull_request:
+  # pull_request:  # Disable this on self-hosted runners!!!
   # Trigger the workflow at the end of every week
   schedule:
     - cron: '0 0 * * 0'
