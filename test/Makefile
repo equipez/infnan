@@ -42,7 +42,7 @@ else
 endif
 atest: FCO = $(AFORT) -O4
 
-AFLANG := $(shell find -L /opt/AMD -type f -executable -name flang -print 2> /dev/null | sort | tail -n 1)
+AFLANG := $(shell find -L /opt/AMD -type f -executable -name flang -print 2>/dev/null | sort | tail -n 1)
 dtest: FCO = $(AFLANG) -O4 -Ofast -ffast-math  # As of AMD clang version 13.0., -Ofast implies -O3, but it is not clear whether it implies -ffast-math
 
 ftest: FCO = flang -O3 -Ofast -ffast-math  # No documentation found about the relation between -Ofast, -O3, and -ffast-math
@@ -53,10 +53,10 @@ itest: FCO = ifort -fast  # -fast implies -Ofast, which in turn implies -O3
 
 ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will encounter "Arithmetic exception: Floating invalid operation"
 
-VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2> /dev/null | sort | tail -n 1)
+VFORT := $(shell find -L /opt/nvidia -type f -executable -name nvfortran -print 2>/dev/null | sort | tail -n 1)
 vtest: FCO = $(VFORT) -O4 -fast  # -fast implies -O2, but the highest optimization level is -O4
 
-RFORT := $(shell find -L /opt/arm -type f -executable -name armflang -print 2> /dev/null | sort | tail -n 1)
+RFORT := $(shell find -L /opt/arm -type f -executable -name armflang -print 2>/dev/null | sort | tail -n 1)
 rtest: FCO = $(RFORT) -Ofast # -Ofast implies -O3 and -ffast-math
 
 stest: FCO = sunf95 -O5 -fast -ftrap=%none
