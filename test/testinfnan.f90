@@ -130,26 +130,31 @@ check_nan = [.false., .false., &
 write (*, '(/(1A))') 'Single-precision tests:'
 
 if (.not. all(is_finite(x) .eqv. check_finite)) then
+    write (*, *) 'True IS_FINITE: ', check_finite
     write (*, *) 'IS_FINITE: ', is_finite(x)
     write (*, *) 'IEEE_IS_FINITE: ', ieee_is_finite(x)
 end if
 
 if (.not. all(is_inf(x) .eqv. check_inf)) then
+    write (*, *) 'True IS_INF: ', check_inf
     write (*, *) 'IS_INF: ', is_inf(x)
     write (*, *) 'IEEE_IS_INF: ', ieee_is_inf(x)
 end if
 
 if (.not. all(is_posinf(x) .eqv. check_posinf)) then
+    write (*, *) 'True IS_POSINF: ', check_posinf
     write (*, *) 'IS_POSINF: ', is_posinf(x)
     write (*, *) 'IEEE_IS_POSINF: ', ieee_is_posinf(x)
 end if
 
 if (.not. all(is_neginf(x) .eqv. check_neginf)) then
+    write (*, *) 'True IS_NEGINF: ', check_neginf
     write (*, *) 'IS_NEGINF: ', is_neginf(x)
     write (*, *) 'IEEE_IS_NEGINF: ', ieee_is_neginf(x)
 end if
 
 if (.not. all(is_nan(x) .eqv. check_nan)) then
+    write (*, *) 'True IS_NAN: ', check_nan
     write (*, *) 'IS_NAN: ', is_nan(x)
     write (*, *) 'IEEE_IS_NAN: ', ieee_is_nan(x)
 end if
@@ -169,26 +174,31 @@ end if
 write (*, '(/(1A))') 'Double-precision tests:'
 
 if (.not. all(is_finite(y) .eqv. check_finite)) then
+    write (*, *) 'True IS_FINITE: ', check_finite
     write (*, *) 'IS_FINITE: ', is_finite(y)
     write (*, *) 'IEEE_IS_FINITE: ', ieee_is_finite(y)
 end if
 
 if (.not. all(is_inf(y) .eqv. check_inf)) then
+    write (*, *) 'True IS_INF: ', check_inf
     write (*, *) 'IS_INF: ', is_inf(y)
     write (*, *) 'IEEE_IS_INF: ', ieee_is_inf(y)
 end if
 
 if (.not. all(is_posinf(y) .eqv. check_posinf)) then
+    write (*, *) 'Truth IS_POSINF: ', check_posinf
     write (*, *) 'IS_POSINF: ', is_posinf(y)
     write (*, *) 'IEEE_IS_POSINF: ', ieee_is_posinf(y)
 end if
 
 if (.not. all(is_neginf(y) .eqv. check_neginf)) then
+    write (*, *) 'True IS_NEGINF: ', check_neginf
     write (*, *) 'IS_NEGINF: ', is_neginf(y)
     write (*, *) 'IEEE_IS_NEGINF: ', ieee_is_neginf(y)
 end if
 
 if (.not. all(is_nan(y) .eqv. check_nan)) then
+    write (*, *) 'True IS_NAN: ', check_nan
     write (*, *) 'IS_NAN: ', is_nan(y)
     write (*, *) 'IEEE_IS_NAN: ', ieee_is_nan(y)
 end if
