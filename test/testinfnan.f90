@@ -71,10 +71,10 @@ y = [PINF_DP, NINF_DP, &
     & PNORMAL_DP, NNORMAL_DP, &
     & PDENORMAL_DP, NDENORMAL_DP, &
     & PZERO_DP, NZERO_DP, &
-    & huge(0.0_DP), -huge(0.0_DP), &
+    & huge(0.0D0), -huge(0.0D0), &
     & epsilon(0.0D0), -epsilon(0.0D0), &
     & tiny(0.0D0), -tiny(0.0D0), &
-    & 0.0_DP, 1.0_DP, -1.0_DP]
+    & 0.0D0, 1.0D0, -1.0D0]
 
 check_finite = [.false., .false., &
     & .false., .false., &
