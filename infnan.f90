@@ -17,10 +17,10 @@ module infnan_mod
 ! (X <= HUGE(X) .AND. X >= -HUGE(X)) may differ from (ABS(X) <= HUGE(X)) ,
 ! (X > HUGE(X) .OR. X < -HUGE(X)) may differ from (ABS(X) > HUGE(X)) , and
 ! (ABS(X) > HUGE(X) .AND. X > 0) may differ from (X > HUGE(X)) .
-! 
-! 5. is_nan must be implemented in a file separated from is_inf and is_finite. Otherwise, is_nan may  
-! not work with some compilers invoked with agressive optimization flags e.g., ifx -fast with 
-! ifx 2022.1.0 or flang -Ofast with flang 15.0.3. 
+!
+! 5. is_nan must be implemented in a file separated from is_inf and is_finite. Otherwise, is_nan may
+! not work with some compilers invoked with aggressive optimization flags e.g., ifx -fast with
+! ifx 2022.1.0 or flang -Ofast with flang 15.0.3.
 !
 ! 6. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
 ! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
@@ -40,7 +40,7 @@ contains
 
 elemental pure function is_nan_sp(x) result(y)
 use consts_mod, only : SP
-use inf_mod, only: is_finite, is_inf
+use inf_mod, only : is_finite, is_inf
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -50,7 +50,7 @@ end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
 use consts_mod, only : DP
-use inf_mod, only: is_finite, is_inf
+use inf_mod, only : is_finite, is_inf
 implicit none
 real(DP), intent(in) :: x
 logical :: y
