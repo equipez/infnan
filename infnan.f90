@@ -54,11 +54,11 @@ contains
 
 
 elemental pure function is_nan_sp(x) result(y)
-use consts_mod, only : SP
+use consts_mod, only : SP, datasize
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
 implicit none
 real(SP), intent(in) :: x
-integer(sizeof(x)) :: ipinf, i
+integer(datasize) :: ipinf, i
 logical :: y
 !y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
 !y = (.not. is_finite(x)) .and. (.not. is_inf(x))
@@ -68,11 +68,11 @@ y = (i > ipinf)
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
-use consts_mod, only : DP
+use consts_mod, only : DP, datasize
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
 implicit none
 real(DP), intent(in) :: x
-integer(sizeof(x)) :: ipinf, i
+integer(datasize) :: ipinf, i
 logical :: y
 !y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
 !y = (.not. is_finite(x)) .and. (.not. is_inf(x))
@@ -82,7 +82,7 @@ y = (i > ipinf)
 end function is_nan_dp
 
 elemental pure function is_finite_sp(x) result(y)
-use consts_mod, only : SP
+use consts_mod, only : SP, datasize
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -91,7 +91,7 @@ y = ((.not. is_nan_sp(x)) .and. (.not. is_inf_sp(x)))
 end function is_finite_sp
 
 elemental pure function is_finite_dp(x) result(y)
-use consts_mod, only : DP
+use consts_mod, only : DP, datasize
 implicit none
 real(DP), intent(in) :: x
 logical :: y
@@ -101,7 +101,7 @@ end function is_finite_dp
 
 
 elemental pure function is_inf_sp(x) result(y)
-use consts_mod, only : SP
+use consts_mod, only : SP, datasize
 implicit none
 real(SP), intent(in) :: x
 logical :: y
@@ -110,7 +110,7 @@ y = (is_posinf_sp(x) .or. is_neginf_sp(x))
 end function is_inf_sp
 
 elemental pure function is_inf_dp(x) result(y)
-use consts_mod, only : DP
+use consts_mod, only : DP, datasize
 implicit none
 real(DP), intent(in) :: x
 logical :: y
@@ -120,12 +120,12 @@ end function is_inf_dp
 
 
 elemental pure function is_posinf_sp(x) result(y)
-use consts_mod, only : SP
+use consts_mod, only : SP, datasize
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
 implicit none
 real(SP), intent(in) :: x
 logical :: y
-integer(sizeof(x)) :: ipinf, i
+integer(datasize) :: ipinf, i
 !y = (abs(x) > huge(x)) .and. (x > 0)
 i = transfer(x, i)
 ipinf = transfer(ieee_value(1.0, ieee_positive_inf), ipinf)
@@ -133,11 +133,11 @@ y = (i == ipinf)
 end function is_posinf_sp
 
 elemental pure function is_posinf_dp(x) result(y)
-use consts_mod, only : DP
+use consts_mod, only : DP, datasize
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
 implicit none
 real(DP), intent(in) :: x
-integer(sizeof(x)) :: ipinf, i
+integer(datasize) :: ipinf, i
 logical :: y
 !y = (abs(x) > huge(x)) .and. (x > 0)
 i = transfer(x, i)
@@ -147,11 +147,11 @@ end function is_posinf_dp
 
 
 elemental pure function is_neginf_sp(x) result(y)
-use consts_mod, only : SP
+use consts_mod, only : SP, datasize
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_negative_inf
 implicit none
 real(SP), intent(in) :: x
-integer(sizeof(x)) :: ininf, i
+integer(datasize) :: ininf, i
 logical :: y
 !y = (abs(x) > huge(x)) .and. (x < 0)
 i = transfer(x, i)
@@ -160,11 +160,11 @@ y = (i == ininf)
 end function is_neginf_sp
 
 elemental pure function is_neginf_dp(x) result(y)
-use consts_mod, only : DP
+use consts_mod, only : DP, datasize
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_negative_inf
 implicit none
 real(DP), intent(in) :: x
-integer(sizeof(x)) :: ininf, i
+integer(datasize) :: ininf, i
 logical :: y
 !y = (abs(x) > huge(x)) .and. (x < 0)
 i = transfer(x, i)
