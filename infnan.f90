@@ -25,7 +25,6 @@ module infnan_mod
 ! 6. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
 ! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
 
-use inf_mod, only : is_finite, is_inf, is_posinf, is_neginf
 implicit none
 private
 public :: is_finite, is_inf, is_posinf, is_neginf, is_nan
@@ -34,28 +33,143 @@ interface is_nan
     module procedure is_nan_sp, is_nan_dp
 end interface is_nan
 
+interface is_finite
+    module procedure is_finite_sp, is_finite_dp
+end interface is_finite
+
+interface is_posinf
+    module procedure is_posinf_sp, is_posinf_dp
+end interface is_posinf
+
+interface is_neginf
+    module procedure is_neginf_sp, is_neginf_dp
+end interface is_neginf
+
+interface is_inf
+    module procedure is_inf_sp, is_inf_dp
+end interface is_inf
+
 
 contains
 
 
 elemental pure function is_nan_sp(x) result(y)
-use consts_mod, only : SP
-use inf_mod, only : is_finite, is_inf
+use consts_mod, only : SP, datasize
+use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
 implicit none
 real(SP), intent(in) :: x
+integer(datasize) :: ipinf, i
 logical :: y
 !y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
-y = (.not. is_finite(x)) .and. (.not. is_inf(x))
+!y = (.not. is_finite(x)) .and. (.not. is_inf(x))
+i = transfer(abs(x), i)
+ipinf = transfer(ieee_value(1.0, ieee_positive_inf), ipinf)
+y = (i > ipinf)
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
-use consts_mod, only : DP
-use inf_mod, only : is_finite, is_inf
+use consts_mod, only : DP, datasize
+use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
+implicit none
+real(DP), intent(in) :: x
+integer(datasize) :: ipinf, i
+logical :: y
+!y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
+!y = (.not. is_finite(x)) .and. (.not. is_inf(x))
+i = transfer(abs(x), i)
+ipinf = transfer(ieee_value(1d0, ieee_positive_inf), ipinf)
+y = (i > ipinf)
+end function is_nan_dp
+
+elemental pure function is_finite_sp(x) result(y)
+use consts_mod, only : SP, datasize
+implicit none
+real(SP), intent(in) :: x
+logical :: y
+!y = (x <= huge(x) .and. x >= -huge(x))
+y = ((.not. is_nan_sp(x)) .and. (.not. is_inf_sp(x)))
+end function is_finite_sp
+
+elemental pure function is_finite_dp(x) result(y)
+use consts_mod, only : DP, datasize
 implicit none
 real(DP), intent(in) :: x
 logical :: y
-!y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
-y = (.not. is_finite(x)) .and. (.not. is_inf(x))
-end function is_nan_dp
+!y = (x <= huge(x) .and. x >= -huge(x))
+y = ((.not. is_nan_dp(x)) .and. (.not. is_inf_dp(x)))
+end function is_finite_dp
+
+
+elemental pure function is_inf_sp(x) result(y)
+use consts_mod, only : SP, datasize
+implicit none
+real(SP), intent(in) :: x
+logical :: y
+!y = (abs(x) > huge(x))
+y = (is_posinf_sp(x) .or. is_neginf_sp(x))
+end function is_inf_sp
+
+elemental pure function is_inf_dp(x) result(y)
+use consts_mod, only : DP, datasize
+implicit none
+real(DP), intent(in) :: x
+logical :: y
+!y = (abs(x) > huge(x))
+y = (is_posinf_dp(x) .or. is_neginf_dp(x))
+end function is_inf_dp
+
+
+elemental pure function is_posinf_sp(x) result(y)
+use consts_mod, only : SP, datasize
+use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
+implicit none
+real(SP), intent(in) :: x
+logical :: y
+integer(datasize) :: ipinf, i
+!y = (abs(x) > huge(x)) .and. (x > 0)
+i = transfer(x, i)
+ipinf = transfer(ieee_value(1.0, ieee_positive_inf), ipinf)
+y = (i == ipinf)
+end function is_posinf_sp
+
+elemental pure function is_posinf_dp(x) result(y)
+use consts_mod, only : DP, datasize
+use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_positive_inf
+implicit none
+real(DP), intent(in) :: x
+integer(datasize) :: ipinf, i
+logical :: y
+!y = (abs(x) > huge(x)) .and. (x > 0)
+i = transfer(x, i)
+ipinf = transfer(ieee_value(1d0, ieee_positive_inf), ipinf)
+y = (i == ipinf)
+end function is_posinf_dp
+
+
+elemental pure function is_neginf_sp(x) result(y)
+use consts_mod, only : SP, datasize
+use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_negative_inf
+implicit none
+real(SP), intent(in) :: x
+integer(datasize) :: ininf, i
+logical :: y
+!y = (abs(x) > huge(x)) .and. (x < 0)
+i = transfer(x, i)
+ininf = transfer(ieee_value(1.0, ieee_negative_inf), ininf)
+y = (i == ininf)
+end function is_neginf_sp
+
+elemental pure function is_neginf_dp(x) result(y)
+use consts_mod, only : DP, datasize
+use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_negative_inf
+implicit none
+real(DP), intent(in) :: x
+integer(datasize) :: ininf, i
+logical :: y
+!y = (abs(x) > huge(x)) .and. (x < 0)
+i = transfer(x, i)
+ininf = transfer(ieee_value(1d0, ieee_negative_inf), ininf)
+y = (i == ininf)
+end function is_neginf_dp
 
 end module infnan_mod
