@@ -47,7 +47,7 @@ real(SP), intent(in) :: x
 logical :: y
 y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  ! Does not always work
 !y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x))  ! Does not always work
-y = y .or. ((.not. is_finite(x)) .and. (.not. is_inf(x)))
+y = ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
@@ -58,7 +58,7 @@ real(DP), intent(in) :: x
 logical :: y
 y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  ! Does not always work
 !y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x))  ! Does not always work
-y = y .or. ((.not. is_finite(x)) .and. (.not. is_inf(x)))
+y = ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_dp
 
 
