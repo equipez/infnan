@@ -25,7 +25,8 @@ module infnan_mod
 ! 6. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
 ! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
 
-use inf_mod, only : is_finite, is_inf, is_posinf, is_neginf
+use, non_intrinsic :: inf_values_mod, only : posinf, neginf
+use, non_intrinsic :: inf_mod, only : is_finite, is_inf, is_posinf, is_neginf
 implicit none
 private
 public :: is_finite, is_inf, is_posinf, is_neginf, is_nan
@@ -45,7 +46,8 @@ implicit none
 real(SP), intent(in) :: x
 logical :: y
 !y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
-y = (.not. is_finite(x)) .and. (.not. is_inf(x))
+y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x))  ! Does not always work
+y = y .or. ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
@@ -55,7 +57,8 @@ implicit none
 real(DP), intent(in) :: x
 logical :: y
 !y = (.not. (x <= huge(x) .and. x >= -huge(x))) .and. (.not. abs(x) > huge(x))  ! Does not always work
-y = (.not. is_finite(x)) .and. (.not. is_inf(x))
+y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x))  ! Does not always work
+y = y .or. ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_dp
 
 end module infnan_mod
