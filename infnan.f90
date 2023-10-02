@@ -25,7 +25,6 @@ module infnan_mod
 ! 6. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
 ! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
 
-use, non_intrinsic :: huge_value_mod, only : huge_value
 use, non_intrinsic :: inf_mod, only : is_finite, is_inf, is_posinf, is_neginf
 implicit none
 private
@@ -41,22 +40,20 @@ contains
 
 elemental pure function is_nan_sp(x) result(y)
 use consts_mod, only : SP
-use inf_mod, only : is_finite, is_inf
 implicit none
 real(SP), intent(in) :: x
 logical :: y
-y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  ! Does not always work
+!y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  ! Does not always work
 !y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x))  ! Does not always work
 y = ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
 use consts_mod, only : DP
-use inf_mod, only : is_finite, is_inf
 implicit none
 real(DP), intent(in) :: x
 logical :: y
-y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  ! Does not always work
+!y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  ! Does not always work
 !y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x))  ! Does not always work
 y = ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_dp
