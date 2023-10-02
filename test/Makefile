@@ -47,9 +47,11 @@ dtest: FCO = $(AFLANG) -O4 -Ofast -ffast-math  # As of AMD clang version 13.0., 
 
 ftest: FCO = flang -O3 -Ofast -ffast-math  # No documentation found about the relation between -Ofast, -O3, and -ffast-math
 
-gtest: FCO = gfortran -Ofast  # -Ofast implies -O3 and -ffast-math
+# Zaikun 20231003: gtest fails if gfortran-13 is invoked with -Ofast -flto, which runs the standard link-time optimizer.
+gtest: FCO = gfortran -Ofast -flto # -Ofast implies -O3 and -ffast-math
+#gtest: FCO = gfortran -Ofast # -Ofast implies -O3 and -ffast-math
 
-itest: FCO = ifort -fast  # -fast implies -Ofast, which in turn implies -O3
+itest: FCO = ifort -fast -ipo  # -fast implies -Ofast, which in turn implies -O3
 
 ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will encounter "Arithmetic exception: Floating invalid operation"
 
@@ -61,7 +63,7 @@ rtest: FCO = $(RFORT) -Ofast # -Ofast implies -O3 and -ffast-math
 
 stest: FCO = sunf95 -O5 -fast -ftrap=%none
 
-xtest: FCO = ifx -fast
+xtest: FCO = ifx -fast -ipo
 
 %test: $(SRC)
 	$(FCO) -o $@ $^
