@@ -61,4 +61,5 @@ y = (.not. (x < posinf(x) .and. x >= neginf(x))) .and. (.not. abs(x) >= posinf(x
 y = y .or. ((.not. is_finite(x)) .and. (.not. is_inf(x)))
 end function is_nan_dp
 
+
 end module infnan_mod

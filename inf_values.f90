@@ -1,7 +1,6 @@
 module inf_values_mod
 
 use, intrinsic :: ieee_arithmetic, only : ieee_value, ieee_negative_inf, ieee_positive_inf
-use, non_intrinsic :: consts_mod, only : SP, DP
 implicit none
 private
 public :: posinf, neginf
