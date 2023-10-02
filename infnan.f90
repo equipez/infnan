@@ -18,9 +18,11 @@ module infnan_mod
 ! (X > HUGE(X) .OR. X < -HUGE(X)) may differ from (ABS(X) > HUGE(X)) , and
 ! (ABS(X) > HUGE(X) .AND. X > 0) may differ from (X > HUGE(X)) .
 !
-! 5. is_nan must be implemented in a file separated from is_inf and is_finite. Otherwise, is_nan may
+! 5. is_nan must be implemented in a file separated from IS_INF and IS_FINITE. Otherwise, is_nan may
 ! not work with some compilers invoked with aggressive optimization flags e.g., ifx -fast with
 ! ifx 2022.1.0 or flang -Ofast with flang 15.0.3.
+! Similarly, the intrinsic HUGE must be wrapped by HUGE_VALUE in a file separated from IS_INF and
+! IS_FINITE. Otherwise, IS_INF and IS_FINITE do not work with `gfortran-13 -Ofast`.
 !
 ! 6. Even though the functions involve invocation of ABS and HUGE, their performance (in terms of
 ! CPU time) turns out comparable to or even better than the functions in `ieee_arithmetic`.
