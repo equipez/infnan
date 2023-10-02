@@ -16,7 +16,7 @@
 
 .PHONY: test testd clean
 
-SRC = ../consts.f90 ../inf_values.f90 ../inf.f90 ../infnan.f90 ieee_infnan.f90 testinfnan.f90 test.f90
+SRC = ../consts.f90 ../huge_value.f90 ../inf.f90 ../infnan.f90 ieee_infnan.f90 testinfnan.f90 test.f90
 
 test:
 	make -s 9test
