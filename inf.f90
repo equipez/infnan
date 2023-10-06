@@ -3,7 +3,7 @@ module inf_mod
 ! compilers are invoked with aggressive optimization flags, e.g., `gfortran -Ofast`.
 ! See infnan.f90 for more comments.
 
-use, non_intrinsic :: huge_value_mod, only : huge_value
+use, non_intrinsic :: huge_mod, only : huge_value
 implicit none
 private
 public :: is_finite, is_inf, is_posinf, is_neginf

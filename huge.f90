@@ -1,4 +1,4 @@
-module huge_value_mod
+module huge_mod
 
 implicit none
 private
@@ -29,4 +29,4 @@ y = huge(x)
 end function huge_value_dp
 
 
-end module huge_value_mod
+end module huge_mod
