@@ -46,8 +46,10 @@ use consts_mod, only : SP
 implicit none
 real(SP), intent(in) :: x
 logical :: y
-y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x)) 
-y = ((.not. is_finite(x)) .and. (.not. is_inf(x))) .or. y
+!y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x)) 
+!y = ((.not. is_finite(x)) .and. (.not. is_inf(x))) .or. y
+y = (.not. is_inf(x) .and. .not. (x <= huge_value(x) .and. x>= -huge_value(x))) 
+y = (.not. is_finite(x) .and. .not. (abs(x) > huge_value(x))) .or. y 
 end function is_nan_sp
 
 elemental pure function is_nan_dp(x) result(y)
@@ -55,8 +57,10 @@ use consts_mod, only : DP
 implicit none
 real(DP), intent(in) :: x
 logical :: y
-y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x))  
-y = ((.not. is_finite(x)) .and. (.not. is_inf(x))) .or. y
+!y = (.not. (x <= huge_value(x) .and. x >= -huge_value(x))) .and. (.not. abs(x) > huge_value(x)) 
+!y = ((.not. is_finite(x)) .and. (.not. is_inf(x))) .or. y
+y = (.not. is_inf(x) .and. .not. (x <= huge_value(x) .and. x>= -huge_value(x))) 
+y = (.not. is_finite(x) .and. .not. (abs(x) > huge_value(x))) .or. y 
 end function is_nan_dp
 
 
