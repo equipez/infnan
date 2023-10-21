@@ -23,12 +23,6 @@ jobs:
         exclude:
           - os: ubuntu-20.04
             version: 12
-          - os: ubuntu-20.04
-            version: 13
-          - os: windows-latest
-            version: 13
-          - os: windows-2019
-            version: 13
 
     steps:
       - name: Checkout repository
