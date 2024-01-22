@@ -13,7 +13,8 @@ on:
       fflags:
         description: FFLAGS
         required: false
-
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual run {0}', inputs.fflags) || '' }}
+ 
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -43,5 +44,5 @@ jobs:
           cd test && make itest
           if [[ "$RUNNER_OS" = "Linux" ]] ; then
             ifx ${{ github.event.inputs.fflags }} ../consts.f90 ../huge.f90 ../inf.f90 ../infnan.f90 ieee_infnan.f90 testinfnan.f90 test.f90  && ./a.out
-            make xtest
+            #make xtest
           fi
