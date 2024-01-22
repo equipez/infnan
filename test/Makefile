@@ -51,7 +51,7 @@ ftest: FCO = flang -O3 -Ofast -ffast-math  # No documentation found about the re
 gtest: FCO = gfortran -Ofast -flto # -Ofast implies -O3 and -ffast-math
 #gtest: FCO = gfortran -Ofast # -Ofast implies -O3 and -ffast-math
 
-itest: FCO = ifort -fast  # -fast implies -Ofast, which in turn implies -O3
+itest: FCO = ifort -fast -diag-disable=10448  # -fast implies -Ofast, which in turn implies -O3
 
 ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will encounter "Arithmetic exception: Floating invalid operation"
 
