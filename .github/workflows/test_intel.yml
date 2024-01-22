@@ -9,7 +9,10 @@ on:
     - cron: '0 0 * * 0'
   # Trigger the workflow when it is manually triggered
   workflow_dispatch:
-
+    inputs:
+    fflags:
+      description: FFLAGS
+      required: false
 
 jobs:
   test:
@@ -39,5 +42,6 @@ jobs:
           source /opt/intel/oneapi/setvars.sh 
           cd test && make itest
           if [[ "$RUNNER_OS" = "Linux" ]] ; then
+            ifx ${{ github.event.inputs.fflags }} ../consts.f90 ../huge.f90 ../inf.f90 ../infnan.f90 ieee_infnan.f90 testinfnan.f90 test.f90  && ./a.out
             make xtest
           fi
