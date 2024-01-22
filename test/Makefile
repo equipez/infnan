@@ -51,7 +51,7 @@ ftest: FCO = flang -O3 -Ofast -ffast-math  # No documentation found about the re
 gtest: FCO = gfortran -Ofast -flto # -Ofast implies -O3 and -ffast-math
 #gtest: FCO = gfortran -Ofast # -Ofast implies -O3 and -ffast-math
 
-itest: FCO = ifort -fast -ipo  # -fast implies -Ofast, which in turn implies -O3
+itest: FCO = ifort -fast  # -fast implies -Ofast, which in turn implies -O3
 
 ntest: FCO = nagfor -O4 -ieee=full  # -ieee is needed for using NaN, or we will encounter "Arithmetic exception: Floating invalid operation"
 
@@ -63,7 +63,18 @@ rtest: FCO = $(RFORT) -Ofast # -Ofast implies -O3 and -ffast-math
 
 stest: FCO = sunf95 -O5 -fast -ftrap=%none
 
-xtest: FCO = ifx -fast -ipo
+# According to https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2024-0/fast.html
+# -fast sets the following options:
+# -ipo, -O3, -no-prec-div,-static, -fp-model fast=2, and -xHost
+# However, as of ifx (IFX) 2024.0.2, -fast will lead to the following errors on GitHub Actions:
+# ---------------------------------------------------------------------------
+# 'native' is not a recognized processor for this target (ignoring processor)
+# LLVM ERROR: 64-bit code requested on a subtarget that doesn't support it!
+# error #5629: **Internal compiler error: abort signal raised** Please report this error along with the circumstances in which it occurred in a Software Problem Report.
+# ---------------------------------------------------------------------------
+# Strangely, this will not happen if we specify the flags manually, and this is not observed on local machines.
+#xtest: FCO = ifx -fast
+xtest: FCO = ifx -ipo -O3 -no-prec-div -static -fp-model fast=2 -xHost
 
 %test: $(SRC)
 	$(FCO) -o $@ $^
