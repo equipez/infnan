@@ -10,9 +10,9 @@ on:
   # Trigger the workflow when it is manually triggered
   workflow_dispatch:
     inputs:
-    fflags:
-      description: FFLAGS
-      required: false
+      fflags:
+        description: FFLAGS
+        required: false
 
 jobs:
   test:
