@@ -50,7 +50,6 @@ jobs:
         run: |
           sudo ln -sf $(which gfortran-${{ matrix.version }}) $(dirname $(which gfortran-${{ matrix.version }}))/gfortran
           which gfortran && gfortran --version
-          CC: ${{ steps.setup_fortran.outputs.cc }}
 
       - name: Conduct the test
         run: cd test; make gtest
